@@ -1,0 +1,133 @@
+function unsubscribe() {
+  navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
+    // To unsubscribe from push messaging, you need get the
+    // subcription object, which you can call unsubscribe() on.
+    serviceWorkerRegistration.pushManager.getSubscription().then(
+      function(pushSubscription) {
+        // Check we have a subscription to unsubscribe
+        if (!pushSubscription) {
+          // No subscription object, so set the state
+          // to allow the user to subscribe to push
+          return;
+        }
+
+        // We have a subscription, so call unsubscribe on it
+        pushSubscription.unsubscribe().then(function() {
+          sendSubscriptionToServer({ endpoint: '', keys: { auth: '', p256dh: '' } });
+          showTurtle();
+        }).catch(function(e) {
+          // We failed to unsubscribe, this can lead to
+          // an unusual state, so may be best to remove
+          // the subscription id from your data store and
+          // inform the user that you disabled push
+          showTurtle();
+        });
+      }).catch(function(e) {
+    });
+  });
+}
+
+function subscribe() {
+  navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
+    serviceWorkerRegistration.pushManager.subscribe(
+      { userVisibleOnly: true, applicationServerKey: window.vapidPublicKey })
+      .then(function(subscription) {
+        // The subscription was successful
+        console.log('subscription successful');
+        console.log(subscription);
+        return sendSubscriptionToServer(subscription);
+      })
+      .catch(function(e) {
+        showTurtle();
+        if (Notification.permission !== 'granted') {
+          // The user denied the notification permission which
+          // means we failed to subscribe and the user will need
+          // to manually change the notification permission to
+          // subscribe to push messages
+          console.log('permission denied');
+        } else {
+          console.log('problem with subscription')
+        }
+      });
+  });
+}
+
+function sendSubscriptionToServer(subscription) {
+  $.post("/subscribe", { subscription: subscription.toJSON() });
+}
+
+function showTurtle() {
+  console.log('show notifications problem turtle');
+  $('#pushNotifications').data('pushnotificationsenabled', 'false');
+}
+
+// Once the service worker is registered set the initial state
+function initialiseState() {
+  // Are Notifications supported in the service worker?
+  if (!('showNotification' in ServiceWorkerRegistration.prototype)) {
+    showTurtle();
+    return;
+  }
+
+  // Check the current Notification permission.
+  // If its denied, it's a permanent block until the
+  // user changes the permission
+  if (Notification.permission === 'denied') {
+    showTurtle();
+    return;
+  }
+
+  // Check if push messaging is supported
+  if (!('PushManager' in window)) {
+    showTurtle();
+    return;
+  }
+
+  // We need the service worker registration to check for a subscription
+  navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
+    // Do we already have a push message subscription?
+    serviceWorkerRegistration.pushManager.getSubscription()
+      .then(function(subscription) {
+        console.log('subscription??');
+        console.log(subscription);
+
+        if (!subscription) {
+          // We aren’t subscribed to push, so set UI
+          // to allow the user to enable push
+          subscribe();
+        } else {
+          sendSubscriptionToServer(subscription);
+        }
+      })
+      .catch(function(err) {
+        console.log('Error during getSubscription()', err);
+      });
+  });
+}
+
+function registerBroadcastReceiver() {
+  navigator.serviceWorker.onmessage = function(event) {
+    console.log('notification from service worker received!!!!');
+    console.log(event);
+    if (event.data.type === 'audio') {
+      // play the sound
+      var audio = new Audio("<%= audio_path('notificationAlert.mp3') %>");
+      audio.play();
+    } else {
+      jQuery.post('room_requests/accept', { user_id: window.user.id, room_id: event.data.id });
+    }
+  };
+}
+window.addEventListener('doUnsubscribe', unsubscribe);
+window.addEventListener('doSubscribe', function() {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/serviceworker.js')
+      .then(initialiseState)
+      .catch((ex) => console.log(ex));
+  } else {
+    showTurtle();
+  }
+});
+
+window
+registerBroadcastReceiver();

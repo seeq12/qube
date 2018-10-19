@@ -1,0 +1,80 @@
+function onPush(event) {
+
+  console.log('received push notification:');
+  console.log(event.data);
+
+  var data = {};
+  if (event.data) {
+    try {
+      data = event.data.json();
+    } catch (err) {
+    }
+    var message = data.message;
+    console.log('message received: '+ message);
+    var title = 'Qube Notification';
+    var icon = '<%= image_url("default/cube.png") %>';
+    var url = new URL(self.location.origin).href;
+    event.waitUntil(self.clients.matchAll({ includeUncontrolled: false, type: 'window' }).then(function(clients) {
+      var properClient = null;
+      for (var i = 0; i < clients.length; i++) {
+        if (clients[i].url === url) {
+          properClient = clients[i];
+        }
+      }
+
+      if (properClient) {
+        properClient.postMessage({ 'type': 'audio' });
+        console.log('proper client found - supposedly playing sound')
+      } else {
+        console.log('no proper client found - will not play sound')
+      }
+    }));
+
+    event.waitUntil(
+      self.registration.showNotification(title, {
+        body: message,
+        icon: icon,
+        sound: data.type === 'request' ? "<%= audio_url('gentleKnock.mp3') %>" : "<%= audio_url('doorbell.mp3') %>",
+        requireInteraction: data.type === 'request',
+        data: data
+      })
+    );
+
+  }
+}
+
+function onNotificationClick(event) {
+  if (event.notification.data.type === 'request') {
+    var url = new URL(self.location.origin).href;
+    event.waitUntil(self.clients.matchAll({ includeUncontrolled: false, type: 'window' }).then(function(clients) {
+      var properClient = null;
+      for (var i = 0; i < clients.length; i++) {
+        if (clients[i].url === url) {
+          properClient = clients[i];
+        }
+      }
+      if (properClient) {
+        properClient.postMessage(event.notification.data);
+        return properClient.focus();
+      } else {
+        openURL(url);
+      }
+    }));
+  }
+
+  if (event.notification.data.type === 'slack') {
+    openURL('slack://open');
+  }
+
+  event.notification.close();
+}
+
+
+function openURL(url) {
+  if (clients.openWindow) {
+    return clients.openWindow(url);
+  }
+}
+
+self.addEventListener("push", onPush);
+self.addEventListener('notificationclick', onNotificationClick);

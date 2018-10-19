@@ -1,0 +1,34 @@
+{
+  "preset": "airbnb",
+  "safeContextKeyword": [
+    "vm",
+    "_this",
+    "that"
+  ],
+  "disallowMultipleVarDecl": {
+    "allExcept": [
+      "undefined"
+    ]
+  },
+  "disallowSpacesInsideArrayBrackets": false,
+  "disallowQuotedKeysInObjects": false,
+  "requireTrailingComma": false,
+  "disallowTrailingComma": true,
+  "requireAlignedMultilineParams": true,
+  "validateLineBreaks": null,
+  "requireSpacesInsideObjectBrackets": {
+    "allExcept": [
+      "}",
+      ")"
+    ]
+  },
+  "requireSpacesInAnonymousFunctionExpression": false,
+  "disallowSpacesInFunctionExpression": {
+    "beforeOpeningRoundBrace": true
+  },
+  "disallowSpacesInAnonymousFunctionExpression": {
+    "beforeOpeningRoundBrace": true
+  },
+  "requirePaddingNewLinesBeforeLineComments": false,
+  "maximumLineLength": false
+}
