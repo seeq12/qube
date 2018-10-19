@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Qube<%= @current_user.present? ? " - #{@current_user.name}" : "" %></title>
+  <%= favicon_link_tag 'favicons/favicon.ico' %>
+  <%= favicon_link_tag 'favicons/apple-touch-icon.png', rel: 'apple-touch-icon' %>
+  <%= favicon_link_tag 'favicons/safari-pinned-tab.svg', rel: 'mask-icon' %>
+
+  <%= csrf_meta_tags %>
+  <%= action_cable_meta_tag %>
+
+
+  <link rel="manifest" href="<%= asset_path 'manifest.json' %>" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+   <%= stylesheet_pack_tag 'Root' %>
+   <%= javascript_include_tag 'application' %>
+   <%= stylesheet_link_tag 'application', media: 'all' %>
+   <%= javascript_pack_tag 'Root' %>
+</head>
+
+  <body>
+    <div class="hidden" id="currentUserId" data-userId="<%= @current_user.try(:id).to_s %>"></div>
+    <div class="hidden" id="pushNotifications" data-pushNotificationsEnabled="true"></div>
+    <div id="application" class="height-maximum"/>
+  </body>
+</html>

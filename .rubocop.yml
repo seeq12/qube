@@ -1,0 +1,68 @@
+
+AllCops:
+  TargetRubyVersion: 2.2
+  Exclude:
+    - '**/db/migrate/*'
+    - '**/db/schema.rb'
+    - '**/Gemfile.lock'
+    - '**/test/**/*'
+    - '**/*.gemspec'
+    - 'node_modules/**/*'
+
+Documentation:
+  Enabled: false
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/BlockLength:
+  CountComments: false
+  Max: 25
+  ExcludedMethods: [ draw, configure ]
+
+Metrics/ClassLength:
+  CountComments: false
+  Max: 175
+
+Metrics/CyclomaticComplexity:
+  Max: 9
+
+Metrics/LineLength:
+  Enabled: false
+  Max: 120
+
+Metrics/MethodLength:
+  CountComments: false
+  Max: 25
+
+Metrics/PerceivedComplexity:
+  Max: 9
+
+Style/AndOr:
+  EnforcedStyle: conditionals
+
+Style/BracesAroundHashParameters:
+  EnforcedStyle: context_dependent
+  Enabled: false
+
+Style/EmptyMethod:
+  EnforcedStyle: expanded
+
+Style/MixinUsage:
+  Exclude:
+    - 'bin/**/*'
+
+Style/MutableConstant:
+  Enabled: false
+
+Style/PercentLiteralDelimiters:
+  PreferredDelimiters:
+    default: '()'
+    '%w': '()'
+
+Style/RegexpLiteral:
+  EnforcedStyle: slashes
+  AllowInnerSlashes: true
+
+Style/SymbolArray:
+  Enabled: false

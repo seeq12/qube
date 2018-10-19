@@ -1,0 +1,279 @@
+// colors
+$mine-shaft: #212121;
+$black: #000000;
+$dove-gray: #616161;
+$tundora: #424242;
+$gallery: #eeeeee;
+$boulder: #757575;
+$alto: #d4d4d4;
+$rainee: #becaad;
+$reef: #d0FF8E;
+$carla_green: #F0FFDA;
+$beryl_green: #D8E5C5;
+$camouflage: #787F6D;
+$gray: #828282;
+$backdropColor:  #000000;
+
+body {
+  background-color: $mine-shaft;
+  color: #333;
+}
+
+/* You could use :after - it doesn't really matter */
+.backdrop {
+  background-image: image-url("darcula/spookyBg.jpg");
+  background-position: 50% 0;
+}
+
+.namebox {
+  background-color: $black !important;
+}
+
+.sidePanel {
+  background: rgba(66, 66, 66, 0.5);
+  color: #BDBDBD;
+}
+
+.userName {
+  color: black;
+}
+
+.office {
+  background-color: $gallery;
+  color: black;
+  border: 3px solid $gray;
+}
+
+.customBtn {
+  background-color: $tundora !important;
+  color: #9E9E9E;
+  border: none;
+}
+
+.out {
+  background-color: rgba(238, 238, 238, 0.6);
+  color: #eeeeee;
+}
+
+.backButtonDiv {
+  background-color: rgba(66, 66, 66, 0.9);
+}
+
+.backButton {
+  background-color: black !important;
+  color: white;
+  &:hover, &:active, &:focus {
+    background-color: white !important;
+    color: black;
+  }
+}
+
+.border {
+  border: solid 1px black;
+}
+
+.unclaimed {
+  background-color: $boulder;
+  opacity: 0.3;
+  border: none;
+  color: white;
+}
+
+.claimOfficeHover {
+  color: $alto;
+}
+
+.meeting {
+  background-color: $rainee;
+}
+
+.watercooler {
+  background-color: $camouflage;
+}
+
+.auditorium {
+  background-color: $carla_green;
+}
+
+.cafeteria {
+  background-color: $carla_green;
+}
+
+.lobby {
+  background-color: $camouflage;
+}
+
+.icon {
+  color: #616161;
+  &:hover {
+    color: white;
+  }
+}
+
+.iconLarge {
+  color: #BDBDBD;
+  &:hover {
+    color: white;
+  }
+}
+
+#status input {
+  color: black;
+}
+
+.toolbar {
+  background-color: $black;
+  color: #616161;
+}
+
+.toolbarUser {
+  background-color: #DCE1E2;
+  border-bottom: #C3D3E1 1px solid;
+}
+
+.floorPlan {
+  background-color: $mine-shaft;
+  opacity: 0.8;
+}
+
+select {
+  // <svg xmlns='http://www.w3.org/2000/svg' width='50px' height='50px'><polyline points='46.139,15.518 25.166,36.49 4.193,15.519' stroke='#E0E0E0' stroke-width='6' fill='transparent'/></svg>
+  // needs to be URL-encoded for firefox
+  background: url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%2750px%27%20height%3D%2750px%27%3E%3Cpolyline%20points%3D%2746.139%2C15.518%2025.166%2C36.49%204.193%2C15.519%27%20stroke%3D%27%23E0E0E0%27%20stroke-width%3D%276%27%20fill%3D%27transparent%27%2F%3E%3C%2Fsvg%3E");
+  background-color: black;
+  color: #BDBDBD;
+  background-repeat: no-repeat;
+  background-position: right 10px top 8px;
+  background-size: 16px 16px;
+  padding: 6px;
+  padding-right: 30px;
+  width: auto;
+  font-size: 16px;
+  text-align: left;
+  border-radius: 0px;
+  -webkit-border-radius: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border: 0px;
+  outline: 0;
+  -webkit-transition: 0.3s ease all;
+  -moz-transition: 0.3s ease all;
+  -ms-transition: 0.3s ease all;
+  -o-transition: 0.3s ease all;
+  transition: 0.3s ease all;
+  text-overflow: '';
+  -moz-appearance: none;
+  text-indent: 0.01px;
+}
+
+select::-ms-expand {
+  display: none;
+}
+
+select:focus, select:active {
+  outline: 0;
+}
+
+.rightSidePanelBottomCorner {
+  background-image: image-url("darcula/zombie.png");
+}
+
+.logoCorner {
+  background-image: image-url("darcula/qube.svg");
+}
+
+.loadingSpinner {
+  color: $mine-shaft;
+}
+
+.watchActive {
+  color: $gallery;
+}
+
+.circle {
+  background-color: $mine-shaft;
+}
+
+
+
+/* Fisrt Tier Dropdown */
+#nav ul ul li {
+  &:hover {
+    background-color: $gallery;
+    color: $black;
+  }
+}
+
+#nav ul li {
+  color: white;
+  background-color: $black;
+}
+
+.sidePanelFilter {
+  background-color: $black;
+
+  input[type=text], input[type=text]:focus {
+    padding-left: 8px;
+    width:100%;
+    background-color: $black;
+    color: white;
+    outline: none;
+    border: 1px solid white;
+    border-radius: 5px;
+  }
+
+  ::placeholder {
+    color: white;
+  }
+}
+
+
+.floorSelection{
+  .floor {
+    border: solid 1px $gallery;
+    color: $gallery;
+    border-radius: 50%;
+    background-color: $backdropColor;
+    &:hover {
+      background-color:white;
+      color: $black;
+    }
+  }
+  .floorWrapper .floorName {
+    background-color: $black;
+    color: white;
+  }
+
+  .current {
+    background-color: white !important;
+    color: $black;
+  }
+}
+
+
+.elevator {
+
+  .floor {
+    .label {
+      color: $gallery;
+    }
+
+    .elevatorDoor {
+      background-color: rgba($gallery, .7);
+    }
+  }
+}
+
+
+.spotlightFloor {
+  background-color: $backdropColor;
+  color: white;
+}
+
+.elevatorMasker {
+  background-color: $backdropColor;
+}
+
+.pinColor {
+  background-color: $rainee;
+}
