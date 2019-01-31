@@ -24,7 +24,7 @@ These instructions will get you a copy of qube up and running on your local mach
 2. Download a copy of qube's source code (`git clone QUBE`)
 3. Install application dependencies by running `bundle install`. This may take awhile.
 3. Install yarn (`brew install yarn`) and run `yarn install`.
-4. Copy secrets.yml.example into a file called secrets.yml. This will be the source of your secret keys, server configuration, and office configuration settings. DO NOT distribute this file or add it to repository.
+4. Copy config/secrets.yml.example into a file called config/secrets.yml. This will be the source of your secret keys, server configuration, and office configuration settings. DO NOT distribute this file or add it to repository.
 
 ## Zoom setup
 
@@ -39,7 +39,7 @@ These instructions will get you a copy of qube up and running on your local mach
 - Name: '/qube'
 - Request URL: your intended qube server URL suffixed with '/slack/command' (https://qube.company.com/slack/command)
 - Short Description: 'Update your qube status!'
-- Usage Hint: '[help]''
+- Usage Hint: '[help]'
 4f. Navigate to 'OAuth & Permissions', and then click on 'Add a new Redirect URL'. Your redirect URL should be your intended qube server URL suffixed with '/users/auth/slack/callback' (https://qube.company.com/users/auth/slack/callback)
 4g. Navigate to 'Interactive Components', click 'Enable Interactive Components', and add a Request URL. Your Request URL should be your intended qube server URL suffixed with '/slack' (https://qube.company.com/slack)
 
