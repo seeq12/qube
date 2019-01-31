@@ -20,7 +20,7 @@ These instructions will get you a copy of qube up and running on your local mach
 
 ### Installing
 
-1. Install Ruby/Rails by following the instructions [here](installrails.com/).
+1. Install Ruby/Rails by following the instructions [here](http://installrails.com/).
 2. Download a copy of qube's source code (`git clone QUBE`)
 3. Install application dependencies by running `bundle install`. This may take awhile.
 3. Install yarn (`brew install yarn`) and run `yarn install`.
