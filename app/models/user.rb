@@ -212,7 +212,7 @@ class User < ApplicationRecord
     user = User.new(email: auth.info.email, theme: 'default', color: SecureRandom.hex(3), state: 'available', password: Devise.friendly_token[0, 20], current_room: Room.next_open_room) if user.nil?
 
     zoom_client = Zoomus.new
-    user_info = zoom_client.user_getbyemail(email: user.email, login_type: 100)
+    user_info = zoom_client.user_getbyemail(email: user.email)
     return unless user_info['id']
 
     user.first_name ||= auth.info.nickname
