@@ -24,7 +24,7 @@ These instructions will get you a copy of Qube up and running on your local mach
 2. Download a copy of qube's source code (`git clone https://github.com/seeq12/qube.git`).
 3. Install mysql (`brew install mysql`). This step is only required if you intend to run or test the application locally.
 4. Install application dependencies by running `bundle install` from the qube directory. This may take awhile.
-5. Install yarn (`brew install yarn` or instructions [here](https://yarnpkg.com/lang/en/docs/install/). This step is only required if you intend to run or test the application locally.
+5. Install yarn (`brew install yarn`) or instructions [here](https://yarnpkg.com/lang/en/docs/install/). This step is only required if you intend to run or test the application locally.
 6. Run `yarn install` from the qube directory. This step is only required if you intend to run or test the application locally.
 
 ### Secure a domain
@@ -47,16 +47,23 @@ These instructions will get you a copy of Qube up and running on your local mach
 #### Configure Zoom for Qube and generate Zoom API keys
 
 6. Create a new app on the Zoom Marketplace at https://marketplace.zoom.us/develop/create. You may need to sign up for a Pro Account with at least one user for API access.
+
     a. On the first page, fill in an App Name (`Qube`) and disable "Intend to publish this app on Zoom Marketplace" (your app will be internal to your company). Click "Account-level app" and select "JWT API credentials" in the dropdown that appears. Click "Create".
+
     b. You will need to fill out some basic information about your app (App Name: `Qube`, Short Description `Virtual Office`, Company Name, and Developer Contact Name/Email). If you would like to upload a qube logo, use this [file](https://raw.githubusercontent.com/seeq12/qube/master/app/assets/images/favicons/android-chrome-512x512.png). Click "Continue".
+
     c. You should see your "App Credentials" now. Copy your API Key and API Secret and paste into secrets.yml (as zoom_api_key and zoom_api_secret, respectively). Click "Continue".
+
     d. You will want to enable an "Event Subscription" (for all users in the account). The "Event notification endpoint URL" should be set to your intended qube server URL suffixed with '/zoom' (ex. 'https://qube.company.com/zoom'). Add the following four events: (under Meeting) `Start Meeting`, `End Meeting`, `Participant/Host joined meeting`, and `Participant/Host left meeting`. Click "Continue". Your Zoom/Qube connection should now be active!
 
 ### Configure Slack for Qube and generate Slack API keys
 
 7. Visit https://api.slack.com/apps and click Create an App.
+
     a. Set the App Name to 'qube' and choose your Slack Workplace.
+
     b. Scroll down to your App Credentials (click on 'Basic Information' first if you don't see this section). Copy your Client ID and Client Secret and paste into secrets.yml (slack_client_id and slack_client_secret under shared).
+
     c. Under "Add features and functionality", click on Slash Commands and then "Create New Command". Fill in the following for the fields below, and then click Save.
     * Name: '/qube'
     * Request URL: your intended qube server URL suffixed with '/slack/command' (https://qube.company.com/slack/command)
@@ -70,7 +77,9 @@ These instructions will get you a copy of Qube up and running on your local mach
     * color: #232a6e
 
     e. Navigate to 'OAuth & Permissions' in the side panel, and then click on 'Add a new Redirect URL'. Your redirect URL should be your intended qube server URL suffixed with '/users/auth/slack/callback'
+
     f. Navigate to 'Interactive Components' in the side panel, enable 'Interactivity', and add a Request URL. Your Request URL should be your intended qube server URL suffixed with '/slack' (https://qube.company.com/slack). Click 'Save Changes'. Your Slack/Qube connection should now be active!
+
     g. Fill out the slack_team_id in secrets.yml. You can find your slack team_id by navigating to your slack messages in a web client (https://company.slack.com/messages). Open Dev Tools (right click anywhere, and click 'Inspect') and click on the 'Elements' tag. Search for "team_id"; it should show up in an object called 'boot_data'. You can also find your team ID using [Slack's API Tester](https://api.slack.com/methods/team.info/test) - generate a token to test with, and click `Test Method`. The ID will appear in the results. If neither of these methods work, try searching for more information on  [stackoverflow](https://stackoverflow.com/questions/40940327/what-is-the-simplest-way-to-find-a-slack-team-id-and-a-channel-id), as slack frequently changes the way that team_id is exposed.
 
 ### Choose a server
@@ -85,8 +94,11 @@ These instructions will get you a copy of Qube up and running on your local mach
 OR
 
 1. Update packages and install essentials by running the following commands:
+
     a. `sudo apt-get update`
+
     b. `sudo apt-get -y upgrade`
+
     c. `sudo apt-get -y install build-essential patch zlib1g-dev liblzma-dev zlib1g-dev libssl-dev libreadline-gplv2-dev openssh-server libcurl4-openssl-dev libxslt1-dev libxml2-dev memcached git-core nginx libyaml-dev libyaml-0-2 gcc make g++ libgmp-dev mysql-server redis-server libmysqlclient-dev`
 2. (Optional) Run `sudo mysql_secure_installation` (to update mysql default security settings). Choose a secure password. You can check that mysql is running by running `mysql -u root` or `sudo mysql -u root` (run `exit` to exit) the mysql client.
 3. (Optional) Update the `supervised` setting in `/etc/redis/redis.conf` to `systemd` to manage redis as a service and restart (`sudo systemctl restart redis.service`). You can check that redis is running using the CLI `redis-cli` (run `ping` to test and `exit` to exit).
@@ -101,15 +113,21 @@ OR
 1. Ensure that you have a local ssh public/private key pair (~/.ssh/id_rsa exists). Generate one (`ssh-keygen -t rsa`) and add it to your agent (`ssh-add`) if this is not the case.
 2. Ensure that you can access github using SSH (NOT HTTPS) - instructions here: https://help.github.com/articles/generating-an-ssh-key/. You must be able to connect using SSH for deployments.
 3. Copy config/deploy.example.rb into a file called deploy.rb.
+
     a. Update :deploy_to if your server user is not `ubuntu` or the file structure is different (for example, if you are deploying on Azure).
+
     b. Update :ssh_options by adding a location to keys if your id_rsa key is elsewhere. Add your server SSH key here as well.
 4. Copy config/deploy/production.example.rb into a file called config/deploy/production.rb. Fill out this file with your server IP address (`ip`), server user (`user`), and servername (`nginx_server_name`).
 5. Copy your local files `database.yml` and `secrets.yml` to your server as `qube/shared/config/database.yml` and `qube/shared/config/secrets.yml` from the home directory. (If you're not exactly where these files should go, you can run `cap production deploy` and let it fail on these missing files; capistrano will create any missing directories and print out a full path for you).
+
     a. Delete the `development` and `test` sections in these files (as we do not want to accidentally run in development or test mode on the server).
+
     b. Update the mysql username, password, and socket in `database.yml`.
 6. Create the production database on your server by running the command `create database qube_production` in the mysql client (`mysql -u root`).
 7. Run `cap production puma:config` and `cap production puma:nginx_config` to copy over puma (appserver) and nginx (reverse proxy server) config.
+
     a. Remove the default nginx configuration (`sudo rm default`) in `/etc/nginx/sites-enabled`.
+
     b. Copy over your server certificate to /etc/ssl/certs/ and your server certificate key to /etc/ssl/private/. Your certificates will need to be named qube_production.crt and qube_production.key (or you will need to update `/etc/nginx/sites-enabled/qube_production`).
 
     OR if you don't have certificates, use Let's Encrypt to generate certificates:
