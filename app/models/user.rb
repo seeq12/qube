@@ -205,14 +205,20 @@ class User < ApplicationRecord
   end
 
   def self.from_omniauth(auth)
+    logger.fatal "email: #{auth.info.emai}"
     user = find_by_email(auth.info.email)
+    logger.fatal "user if found: #{user.inspect}"
+    logger.fatal "settings: #{Setting.instance.self_registration}"
+    logger.fatal "user count zero: #{User.count.zero?}"
     return user if user.present? && user.zoom_host_id.present?
     return nil if user.nil? && !(Setting.instance.self_registration || User.count.zero?)
 
     user = User.new(email: auth.info.email, theme: 'default', color: SecureRandom.hex(3), state: 'available', password: Devise.friendly_token[0, 20], current_room: Room.next_open_room) if user.nil?
+    logger.fatal "new user: #{user.inspect}"
 
     zoom_client = Zoomus.new
     user_info = zoom_client.user_getbyemail(email: user.email, login_type: 100)
+    logger.fatal "zoom user info: #{user_info}"
     return unless user_info['id']
 
     user.first_name ||= auth.info.nickname
@@ -224,7 +230,8 @@ class User < ApplicationRecord
     user.uid = auth.uid
     user.provider = auth['provider']
     client = Slack::Web::Client.new(token: user.slack_token)
-    user.timezone = client.users_info(user: auth.uid, include_local: true).user.tz
+    user.timezone ||= client.users_info(user: auth.uid, include_local: true).user.tz
+    logger.fatal "updated user: #{user.inspect}"
 
     user
   end
