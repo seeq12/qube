@@ -6,8 +6,8 @@
 
 # Ignore config files
 secrets.yml
-deploy/production.rb
-deploy/staging.rb
+production.rb
+staging.rb
 database.yml
 deploy.rb
 

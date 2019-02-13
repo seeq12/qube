@@ -8,11 +8,11 @@
 # server "db.example.com", user: "deploy", roles: %w{db}
 
 # UPDATE INSTANCE CONFIG HERE
-ec2_ip = '11.11.11.11'
-ec2_user = 'ubuntu'
-ec2_host = [ec2_user, ec2_ip].join '@'
+ip = '11.11.11.11'
+user = 'ubuntu'
+host = [user, ip].join '@'
 
-server ec2_host, user: ec2_user, roles: %w(web app db)
+server host, user: user, roles: %w(web app db)
 
 # role-based syntax
 # ==================
@@ -26,9 +26,9 @@ server ec2_host, user: ec2_user, roles: %w(web app db)
 # role :web, %w{user1@primary.com user2@additional.com}, other_property: :other_value
 # role :db,  %w{deploy@example.com}
 
-role :app, ec2_host
-role :web, ec2_host
-role :db,  ec2_host
+role :app, host
+role :web, host
+role :db,  host
 
 # Configuration
 # =============

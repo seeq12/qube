@@ -11,7 +11,7 @@ def random_quote
   [quote, '', ''].sample
 end
 
-num_offices = rand(10..500)
+num_offices = rand(10..50)
 
 num_floors = Floor.office_size(num_offices)
 floor_size = Floor.floorplan_size(num_offices / num_floors)

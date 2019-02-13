@@ -82,10 +82,10 @@ group :development do
   gem 'capistrano-rails-collection'
   gem 'capistrano-rails-console', require: false
   gem 'capistrano-rvm'
-  gem 'capistrano-secrets-yml'
   gem 'capistrano-yarn'
   gem 'capistrano3-delayed-job', '~> 1.0'
   gem 'capistrano3-puma'
+  gem 'capistrano-safe-deploy-to'
 
   gem 'active_record_doctor'
   gem 'bullet'

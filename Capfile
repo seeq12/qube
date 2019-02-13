@@ -35,10 +35,10 @@ require 'capistrano/puma'
 require 'capistrano/rails/assets'
 require 'capistrano/rails/migrations'
 require 'capistrano/yarn'
-require 'capistrano/secrets_yml'
 require 'capistrano/rails/console'
 require 'capistrano/delayed_job'
 require 'capistrano/rails/collection'
+require 'capistrano/safe_deploy_to'
 install_plugin Capistrano::Puma
 install_plugin Capistrano::Puma::Nginx
 
