@@ -21,7 +21,7 @@
     "babel-preset-react": "^6.24.1",
     "bootstrap": "3.3.6",
     "font-awesome": "4.7.0",
-    "jquery": "3.0.0",
+    "jquery": "2.2.4",
     "jquery-ujs": "^1.2.2",
     "jscs": "^3.0.7",
     "lodash": "4.17.5",
