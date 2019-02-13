@@ -217,7 +217,7 @@ class User < ApplicationRecord
     logger.fatal "new user: #{user.inspect}"
 
     zoom_client = Zoomus.new
-    user_info = zoom_client.user_getbyemail(email: user.email, login_type: 100)
+    user_info = zoom_client.user_getbyemail(email: user.email
     logger.fatal "zoom user info: #{user_info}"
     return unless user_info['id']
 
