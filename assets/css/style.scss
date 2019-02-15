@@ -17,11 +17,11 @@ header p {
   margin: 0 0 7px;
 }
 
-a {
+a, a:visited {
   color: #232a6e
 }
 
-a:hover, a:visited, a:focus, a:active {
+a:hover, a:focus, a:active {
   color: #838BD8
 }
 
