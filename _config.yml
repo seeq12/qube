@@ -4,7 +4,3 @@ description: A virtual office that enables you to work remotely. See who's chatt
 logo:  https://raw.githubusercontent.com/seeq12/qube/master/app/assets/images/default/qube.png
 include:
   - qube.md
-  - 01_GETTING_STARTED.md
-  - 02_VIRTUAL_OFFICE_ETIQUETTE.md
-  - 03_FAQ.md
-  - 04_DEPLOYMENT.md
