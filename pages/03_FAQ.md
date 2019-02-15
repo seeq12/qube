@@ -4,7 +4,7 @@
 First, make sure you have allowed qube to receive notifications. To do so click on the lock icon next to the URL in your browser.
 Ensure that the dropdown for Notifications says "Allow". If not, change it accordingly.
 
-![notificationsallowed](./pages/notificationsAllowed.png)
+![notificationsallowed](./images/notificationsAllowed.png)
 
 Still no luck? Use the power button in the top right toolbar to logout and then log back in.
 Also, be sure to disable Focus Assist/Do Not Disturb Mode as those will block qube notifications.

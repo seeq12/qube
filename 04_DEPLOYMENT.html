@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Deploying Qube | qube</title>
+<meta name="generator" content="Jekyll v3.7.4" />
+<meta property="og:title" content="Deploying Qube" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A virtual office that enables you to work remotely. See who’s chatting with coworkers, out of the office, or stepped out for lunch." />
+<meta property="og:description" content="A virtual office that enables you to work remotely. See who’s chatting with coworkers, out of the office, or stepped out for lunch." />
+<link rel="canonical" href="http://localhost:4000/04_DEPLOYMENT.html" />
+<meta property="og:url" content="http://localhost:4000/04_DEPLOYMENT.html" />
+<meta property="og:site_name" content="qube" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/04_DEPLOYMENT.html","description":"A virtual office that enables you to work remotely. See who’s chatting with coworkers, out of the office, or stepped out for lunch.","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://raw.githubusercontent.com/seeq12/qube/master/app/assets/images/default/qube.png"}},"@type":"WebPage","headline":"Deploying Qube","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=">
+    <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1><a href="http://localhost:4000/">
+                
+                  <img src="https://raw.githubusercontent.com/seeq12/qube/master/app/assets/images/default/qube.png" alt="Logo" />
+                
+                qube</a></h1>
+
+        <!-- 
+          <img src="https://raw.githubusercontent.com/seeq12/qube/master/app/assets/images/default/qube.png" alt="Logo" />
+         -->
+
+        <p>A virtual office that enables you to work remotely. See who's chatting with coworkers, out of the office, or stepped out for lunch.</p>
+
+        
+        <p><a href="/assets/css/style.css"></a></p>
+        
+        <p><a href="/01_GETTING_STARTED.html">Your First Day</a></p>
+        
+        <p><a href="/02_VIRTUAL_OFFICE_ETIQUETTE.html">Office Etiquette</a></p>
+        
+        <p><a href="/03_FAQ.html">Troubleshooting/FAQs</a></p>
+        
+        <p><a href="/04_DEPLOYMENT.html">Deploying Qube</a></p>
+        
+        <p><a href="/INDEX.html"></a></p>
+        
+
+        
+        <p class="view"><a href="https://github.com/seeq12/qube">View on GitHub <small>seeq12/qube</small></a></p>
+        
+
+        
+
+      </header>
+      <section>
+
+      <h1 id="deploying-qube">Deploying Qube</h1>
+
+<h3 id="prerequisites">Prerequisites</h3>
+
+<p>qube requires</p>
+<ul>
+  <li><a href="https://slack.com/">Slack</a>. Sign up for the free Slack tier if your company does not currently use Slack.</li>
+  <li><a href="https://zoom.us/">Zoom</a> accounts. Note that a single Pro Zoom user ($15/mo) is enough to get started with qube; you may want to upgrade to Pro accounts for users if you find that qube is heavily used. Get started with a free Pro trial for three months.</li>
+  <li>A SSH-enabled server, domain, and https certificates. An AWS image is available with all dependencies (git, ruby, rails, redis, mysql, and yarn) preinstalled for your convenience; if you host elsewhere you will need to install all dependencies yourself.</li>
+  <li>A Linux or OSX machine to download qube locally, configure your company’s custom office, and manage deployments.</li>
+</ul>
+
+<p>Does that sound complicated? It’s not, we promise! Contact us at <a href="mailto:qube@seeq.com">qube@seeq.com</a> and we’ll help you get set up.</p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<p>These instructions will get you a copy of qube up and running on your local machine and deployed onto an AWS server. Note that you <strong>must</strong> download and install qube locally and configure server/office options before deploying to a server - only sections 7 and 8 (Choose a Server and Configure a Server) involve your production server!</p>
+
+<h3 id="install-dependencies-locally">Install dependencies (locally)</h3>
+
+<ol>
+  <li>Install Ruby/Rails by following the instructions <a href="http://installrails.com/">here</a>. Skip the steps “Install Rails”, “Create your first app”, and “See it live!”.</li>
+  <li>Download a copy of qube’s source code (<code class="highlighter-rouge">git clone https://github.com/seeq12/qube.git</code>).</li>
+  <li>Install mysql (<code class="highlighter-rouge">brew install mysql</code>). This step is only required if you intend to run or test the application locally.</li>
+  <li>Install application dependencies by running <code class="highlighter-rouge">bundle install</code> from the qube directory. This may take awhile.</li>
+  <li>Install yarn (<code class="highlighter-rouge">brew install yarn</code>) or instructions <a href="https://yarnpkg.com/lang/en/docs/install/">here</a>. This step is only required if you intend to run or test the application locally.</li>
+  <li>Run <code class="highlighter-rouge">yarn install</code> from the qube directory. This step is only required if you intend to run or test the application locally.</li>
+</ol>
+
+<h3 id="secure-a-domain">Secure a domain</h3>
+
+<ol>
+  <li>You’ll want a domain for your virtual office. Most likely, you’ll want to subdomain an existing domain that your company owns (ex: https://qube.company.com).</li>
+</ol>
+
+<h3 id="configure-your-database">Configure your database</h3>
+
+<ol>
+  <li>Copy config/database.example.yml into a file called config/database.yml. DO NOT distribute this file or add it to a repository.</li>
+</ol>
+
+<h3 id="configure-your-office-and-add-api-keys">Configure your office and add API keys</h3>
+
+<ol>
+  <li>Copy config/secrets.example.yml into a file called config/secrets.yml. This will be the source of your office configuration settings and secret keys. DO NOT distribute this file or add it to a repository.</li>
+  <li>Update the <code class="highlighter-rouge">num_offices</code> configuration.</li>
+  <li>Generate a secret_key_base by typing in <code class="highlighter-rouge">rails secret</code> in your terminal (from the qube directory). Your secrets.yml file already contains a secret_key_base for development, test, and production environments. You can leave the development and test environments as is, but the production secret_key_base should be updated. This key is <em>used to verify the integrity of signed cookies</em>, so do not skip this step or commit to a repository.</li>
+  <li>Generate a webpush public/private key by opening up the rails console (<code class="highlighter-rouge">rails c</code>), and typing in <code class="highlighter-rouge">vapid_key = Webpush.generate_key</code>. Run <code class="highlighter-rouge">vapid_key.public_key</code> and <code class="highlighter-rouge">vapid_key.private_key</code> and save the results to webpush_public_key and webpush_private_key, respectively. Use different keys for development/production. (You do not need a development key if you do not want to run or test the application locally). Exit the rails console by typing <code class="highlighter-rouge">quit</code>.</li>
+  <li>Update the production <code class="highlighter-rouge">action_cable_url</code> to your intended qube server URL prefixed with ‘wss:’ and suffixed with ‘/cable’ (‘wss://qube.company.com/cable’)</li>
+  <li>Optionally, sign up for a free OpenWeatherMap API key at https://openweathermap.org/appid and save as <code class="highlighter-rouge">open_weather_key</code>. (This key is used for the weather theme - without it, users with the weather theme will see random weather).</li>
+</ol>
+
+<h4 id="configure-zoom-for-qube-and-generate-zoom-api-keys">Configure Zoom for qube and generate Zoom API keys</h4>
+
+<ol>
+  <li>
+    <p>Create a new app on the Zoom Marketplace at https://marketplace.zoom.us/develop/create. You may need to sign up for a Pro Account with at least one user for API access.</p>
+
+    <p>a. On the first page, fill in an App Name (<code class="highlighter-rouge">qube</code>) and disable “Intend to publish this app on Zoom Marketplace” (your app will be internal to your company). Click “Account-level app” and select “JWT API credentials” in the dropdown that appears. Click “Create”.</p>
+
+    <p>b. You will need to fill out some basic information about your app (App Name: <code class="highlighter-rouge">qube</code>, Short Description <code class="highlighter-rouge">Virtual Office</code>, Company Name, and Developer Contact Name/Email). If you would like to upload a qube logo, use this <a href="https://raw.githubusercontent.com/seeq12/qube/master/app/assets/images/favicons/android-chrome-512x512.png">file</a>. Click “Continue”.</p>
+
+    <p>c. You should see your “App Credentials” now. Copy your API Key and API Secret and paste into secrets.yml (as zoom_api_key and zoom_api_secret, respectively). Click “Continue”.</p>
+
+    <p>d. You will want to enable an “Event Subscription” (for all users in the account). The “Event notification endpoint URL” should be set to your intended qube server URL suffixed with ‘/zoom’ (ex. ‘https://qube.company.com/zoom’). Add the following four events: (under Meeting) <code class="highlighter-rouge">Start Meeting</code>, <code class="highlighter-rouge">End Meeting</code>, <code class="highlighter-rouge">Participant/Host joined meeting</code>, and <code class="highlighter-rouge">Participant/Host left meeting</code>. Click “Continue”. Your Zoom/qube connection should now be active!</p>
+  </li>
+</ol>
+
+<h3 id="configure-slack-for-qube-and-generate-slack-api-keys">Configure Slack for qube and generate Slack API keys</h3>
+
+<ol>
+  <li>
+    <p>Visit https://api.slack.com/apps and click Create an App.</p>
+
+    <p>a. Set the App Name to ‘qube’ and choose your Slack Workplace.</p>
+
+    <p>b. Scroll down to your App Credentials (click on ‘Basic Information’ first if you don’t see this section). Copy your Client ID and Client Secret and paste into secrets.yml (slack_client_id and slack_client_secret under shared).</p>
+
+    <p>c. Under “Add features and functionality”, click on Slash Commands and then “Create New Command”. Fill in the following for the fields below, and then click Save.</p>
+    <ul>
+      <li>Name: ‘/qube’</li>
+      <li>Request URL: your intended qube server URL suffixed with ‘/slack/command’ (https://qube.company.com/slack/command)</li>
+      <li>Short Description: ‘Update your qube status!’</li>
+      <li>Usage Hint: ‘[help]’</li>
+      <li>Escape channels, users, and links sent to your app: Leave this unchecked.</li>
+    </ul>
+
+    <p>d. Scroll down to “Display Information”. Fill in the following for the fields below, and then click Save.</p>
+    <ul>
+      <li>App icon &amp; Preview: Upload the qube logo available <a href="https://raw.githubusercontent.com/seeq12/qube/master/app/assets/images/favicons/android-chrome-512x512.png">here</a>.</li>
+      <li>Short description: “Virtual Office”</li>
+      <li>color: #232a6e</li>
+    </ul>
+
+    <p>e. Navigate to ‘OAuth &amp; Permissions’ in the side panel, and then click on ‘Add a new Redirect URL’. Your redirect URL should be your intended qube server URL suffixed with ‘/users/auth/slack/callback’</p>
+
+    <p>f. Navigate to ‘Interactive Components’ in the side panel, enable ‘Interactivity’, and add a Request URL. Your Request URL should be your intended qube server URL suffixed with ‘/slack’ (https://qube.company.com/slack). Click ‘Save Changes’. Your Slack/qube connection should now be active!</p>
+
+    <p>g. Fill out the slack_team_id in secrets.yml. You can find your slack team_id by navigating to your slack messages in a web client (https://company.slack.com/messages). Open Dev Tools (right click anywhere, and click ‘Inspect’) and click on the ‘Elements’ tag. Search for “team_id”; it should show up in an object called ‘boot_data’. You can also find your team ID using <a href="https://api.slack.com/methods/team.info/test">Slack’s API Tester</a> - generate a token to test with, and click <code class="highlighter-rouge">Test Method</code>. The ID will appear in the results. If neither of these methods work, try searching for more information on  <a href="https://stackoverflow.com/questions/40940327/what-is-the-simplest-way-to-find-a-slack-team-id-and-a-channel-id">stackoverflow</a>, as slack frequently changes the way that team_id is exposed.</p>
+  </li>
+</ol>
+
+<h3 id="choose-a-server">Choose a server</h3>
+
+<ol>
+  <li>qube is meant to be a lightweight application and will run reasonably well on a general purpose single core, 64-bit Ubuntu server with 4GB RAM/32GB of disk space and moderate network performance for small or medium size companies (~100 users). Larger companies will want to add extra cores (and update the number of puma workers to match the number of cores) and switch to SSD.</li>
+  <li>Ensure that you can ssh onto the server that you are trying to deploy to. You must be using ssh keys to deploy using capistrano. Make sure that SSH (22), HTTP (80), and HTTPS (443) ports are open.</li>
+</ol>
+
+<h3 id="configure-your-server">Configure your server</h3>
+
+<ol>
+  <li>You can use our preconfigured AWS image here: [not currently available]</li>
+</ol>
+
+<p>OR</p>
+
+<ol>
+  <li>
+    <p>Update packages and install essentials by running the following commands:</p>
+
+    <p>a. <code class="highlighter-rouge">sudo apt-get update</code></p>
+
+    <p>b. <code class="highlighter-rouge">sudo apt-get -y upgrade</code></p>
+
+    <p>c. <code class="highlighter-rouge">sudo apt-get -y install build-essential patch zlib1g-dev liblzma-dev zlib1g-dev libssl-dev libreadline-gplv2-dev openssh-server libcurl4-openssl-dev libxslt1-dev libxml2-dev memcached git-core nginx libyaml-dev libyaml-0-2 gcc make g++ libgmp-dev mysql-server redis-server libmysqlclient-dev</code></p>
+  </li>
+  <li>(Optional) Run <code class="highlighter-rouge">sudo mysql_secure_installation</code> (to update mysql default security settings). Choose a secure password. You can check that mysql is running by running <code class="highlighter-rouge">mysql -u root</code> or <code class="highlighter-rouge">sudo mysql -u root</code> (run <code class="highlighter-rouge">exit</code> to exit) the mysql client.</li>
+  <li>(Optional) Update the <code class="highlighter-rouge">supervised</code> setting in <code class="highlighter-rouge">/etc/redis/redis.conf</code> to <code class="highlighter-rouge">systemd</code> to manage redis as a service and restart (<code class="highlighter-rouge">sudo systemctl restart redis.service</code>). You can check that redis is running using the CLI <code class="highlighter-rouge">redis-cli</code> (run <code class="highlighter-rouge">ping</code> to test and <code class="highlighter-rouge">exit</code> to exit).</li>
+  <li>Install node/npm by running <code class="highlighter-rouge">curl -sL https://deb.nodesource.com/setup_10.x | sudo bash -</code>, followed by <code class="highlighter-rouge">sudo apt install nodejs</code>.</li>
+  <li>Install RVM by following the instructions <a href="https://rvm.io/rvm/install">here</a>. It is recommended not to use the version provided by apt-get.</li>
+  <li>Install ruby by running <code class="highlighter-rouge">rvm install 2.4.0</code> (qube is currently locked at 2.4.0). This may take some time.</li>
+  <li>Install yarn by running <code class="highlighter-rouge">sudo npm install -g yarn</code>.</li>
+  <li>Install nokogiri by running <code class="highlighter-rouge">gem install nokogiri</code>. This may take some time.</li>
+</ol>
+
+<h3 id="configure-your-deployment">Configure your deployment</h3>
+
+<ol>
+  <li>Ensure that you have a local ssh public/private key pair (~/.ssh/id_rsa exists). Generate one (<code class="highlighter-rouge">ssh-keygen -t rsa</code>) and add it to your agent (<code class="highlighter-rouge">ssh-add</code>) if this is not the case.</li>
+  <li>Ensure that you can access github using SSH (NOT HTTPS) - instructions here: https://help.github.com/articles/generating-an-ssh-key/. You must be able to connect using SSH for deployments.</li>
+  <li>
+    <p>Copy config/deploy.example.rb into a file called deploy.rb.</p>
+
+    <p>a. Update :deploy_to if your server user is not <code class="highlighter-rouge">ubuntu</code> or the file structure is different (for example, if you are deploying on Azure).</p>
+
+    <p>b. Update :ssh_options by adding a location to keys if your id_rsa key is elsewhere. Add your server SSH key here as well.</p>
+  </li>
+  <li>Copy config/deploy/production.example.rb into a file called config/deploy/production.rb. Fill out this file with your server IP address (<code class="highlighter-rouge">ip</code>), server user (<code class="highlighter-rouge">user</code>), and servername (<code class="highlighter-rouge">nginx_server_name</code>).</li>
+  <li>
+    <p>Copy your local files <code class="highlighter-rouge">database.yml</code> and <code class="highlighter-rouge">secrets.yml</code> to your server as <code class="highlighter-rouge">qube/shared/config/database.yml</code> and <code class="highlighter-rouge">qube/shared/config/secrets.yml</code> from the home directory. (If you’re not exactly where these files should go, you can run <code class="highlighter-rouge">cap production deploy</code> and let it fail on these missing files; capistrano will create any missing directories and print out a full path for you).</p>
+
+    <p>a. Delete the <code class="highlighter-rouge">development</code> and <code class="highlighter-rouge">test</code> sections in these files (as we do not want to accidentally run in development or test mode on the server).</p>
+
+    <p>b. Update the mysql username, password, and socket in <code class="highlighter-rouge">database.yml</code>.</p>
+  </li>
+  <li>Create the production database on your server by running the command <code class="highlighter-rouge">create database qube_production</code> in the mysql client (<code class="highlighter-rouge">mysql -u root</code>).</li>
+  <li>
+    <p>Run <code class="highlighter-rouge">cap production puma:config</code> and <code class="highlighter-rouge">cap production puma:nginx_config</code> to copy over puma (appserver) and nginx (reverse proxy server) config.</p>
+
+    <p>a. Remove the default nginx configuration (<code class="highlighter-rouge">sudo rm default</code>) in <code class="highlighter-rouge">/etc/nginx/sites-enabled</code>.</p>
+
+    <p>b. Copy over your server certificate to /etc/ssl/certs/ and your server certificate key to /etc/ssl/private/. Your certificates will need to be named qube_production.crt and qube_production.key (or you will need to update <code class="highlighter-rouge">/etc/nginx/sites-enabled/qube_production</code>).</p>
+
+    <p>OR if you don’t have certificates, use Let’s Encrypt to generate certificates:</p>
+    <ul>
+      <li>Run <code class="highlighter-rouge">sudo add-apt-repository ppa:certbot/certbot</code></li>
+      <li>Run <code class="highlighter-rouge">sudo apt-get update</code></li>
+      <li>Run <code class="highlighter-rouge">sudo apt-get install python-certbot-nginx</code></li>
+      <li>Delete or comment out SSL related config in <code class="highlighter-rouge">/etc/nginx/sites-enabled/qube_production</code> so nginx config is valid for certificate generation (shown below).</li>
+      <li>Run <code class="highlighter-rouge">sudo certbot --nginx -d qube.company.com</code>. Note that your domain must already be pointing to your server.</li>
+    </ul>
+
+    <p>c. You’ll need to run <code class="highlighter-rouge">sudo service nginx restart</code> from the server to restart nginx.</p>
+  </li>
+</ol>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#  ssl on;
+#  ssl_certificate /etc/ssl/certs/qube_production.crt;
+#  ssl_certificate_key /etc/ssl/private/qube_production.key;
+</code></pre></div></div>
+
+<ol>
+  <li>Run <code class="highlighter-rouge">cap production deploy</code>.</li>
+  <li>Copy over your server certificate to /etc/ssl/certs/ and your server certificate key to /etc/ssl/private/. Your certificates will need to be named qube_production.crt and qube_production.key (or you will need to update the generated nginx config file).</li>
+</ol>
+
+<h3 id="deploying-to-an-existing-server">Deploying to an existing server</h3>
+
+<p>Run <code class="highlighter-rouge">cap production deploy</code>.</p>
+
+<p>Advanced:</p>
+<ul>
+  <li>You can rollback a release with <code class="highlighter-rouge">cap [stage] deploy:rollback</code> if a mistake has been made.</li>
+  <li>To access rails console on the server machine, run <code class="highlighter-rouge">cap production rails:console</code>.</li>
+</ul>
+
+<h3 id="run-qube-locally-for-development-or-testing">Run qube locally (for development or testing)</h3>
+
+<p>This step is optional.</p>
+
+<ol>
+  <li>Start mysql (<code class="highlighter-rouge">mysql.server start</code>).</li>
+  <li>Run <code class="highlighter-rouge">bundle exec rake db:create db:migrate db:seed</code> to setup your database. Note that by default, we will generate a busy office for you (You cannot interact with generated users, though).</li>
+  <li>Run <code class="highlighter-rouge">rails server</code> (or <code class="highlighter-rouge">rails s</code>)</li>
+  <li>View the application (<code class="highlighter-rouge">localhost:3000</code>).</li>
+  <li>(Optional) Run <code class="highlighter-rouge">rake jobs:work</code> to send reminders.</li>
+</ol>
+
+
+      </section>
+      <footer>
+        <div class="demo">
+          <ul>
+            <a href="mailto:qube@seeq.com">Request a Demo</a>
+          </ul>
+        </div>
+        
+        <p>This project is maintained by <a href="https://github.com/seeq12">seeq12</a></p>
+        
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="/assets/js/scale.fix.js"></script>
+    
+  </body>
+</html>
