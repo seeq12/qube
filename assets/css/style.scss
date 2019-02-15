@@ -1,0 +1,46 @@
+---
+---
+
+@import "{{ site.theme }}";
+
+h1 img {
+  width: 20px;
+}
+
+section img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+header p {
+  margin: 0 0 7px;
+}
+
+a {
+  color: #232a6e
+}
+
+a:hover, a:visited, a:focus, a:active {
+  color: #838BD8
+}
+
+.demo {
+  padding: 0px 55px 0px 25px;
+}
+
+footer ul {
+  padding: 0
+}
+
+footer ul a, footer ul a:hover, footer ul a:focus, footer ul a:visited, footer ul a:active  {
+  line-height: 1.5;
+  font-size: 18px;
+  color: white;
+  display: block;
+  text-align: center;
+  padding-top: 6px;
+  height: 34px;
+  background-color: #232a6e;
+  border-radius: 5px;
+}
