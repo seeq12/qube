@@ -3,10 +3,7 @@ class RoomsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @rooms = Room.all.includes(:owner, :occupants)
-  end
-
-  def show
+    render json: RoomSerializer.new(Room.all).serialized_json
   end
 
   def update
@@ -28,7 +25,7 @@ class RoomsController < ApplicationController
 
     current_user.update_attributes(current_room: @room)
     MapNotifier.join_running_meeting(user: current_user.id, meeting_url: @room.meeting_url, room_id: @room.id) if @room.meeting_in_progress?
-    MapNotifier.room_update(previous_room.id, meeting_id: nil) if previous_room.occupants.count.zero? && previous_room.clear_meeting
+    previous_room.clear_meeting
 
     render json: {}
   end
@@ -54,19 +51,35 @@ class RoomsController < ApplicationController
       end
 
     previous_home = user.home
-    user.home.update_attributes(owner: nil) if previous_home.present?
+
+    if previous_home.present?
+      user.home.update_attributes(owner: nil)
+      MapNotifier.room_update(previous_home.id, owner_id: nil)
+    end
+
     user.update_attributes(current_room: @room, home: @room)
 
     MapNotifier.room_update(@room.id, owner_id: user.id)
     MapNotifier.user_update(id: user.id, home_id: @room.id)
 
     if previous_home.present?
-      pinned_rooms = PinnedRoom.where(room: previous_home).update(room: @room)
-      pinned_rooms.pluck(:user_id).each.uniq do |user_id|
-        MapNotifier.user_update(id: user_id, pinned_rooms: User.find(user_id).pinned_rooms)
+      user.pinned_rooms.each do |pinned_room|
+        if pinned_room.room.floor_id == @room.floor_id
+          pinned_room.destroy
+        end
       end
+      MapNotifier.user_update(id: user.id, pinned_rooms: user.pinned_rooms.reload)
 
-      PinnedRoom.find_by_sql(['select pinned_rooms.* from pinned_rooms inner join rooms on pinned_rooms.room_id = rooms.id where pinned_rooms.user_id = ? and rooms.floor_id = (select floor_id from rooms where owner_id = ?)', current_user.id, current_user.id]).map(&:destroy)
+      pinned_rooms = PinnedRoom.where(room: previous_home)
+      pinned_rooms.each do |pinned_room|
+        if pinned_room.user.home.floor_id == @room.floor_id
+          pinned_room.destroy
+          MapNotifier.user_update(id: pinned_room.user_id, pinned_rooms: pinned_room.user.pinned_rooms)
+        else
+          pinned_room.update(room: @room)
+          MapNotifier.user_update(id: pinned_room.user_id, pinned_rooms: pinned_room.user.pinned_rooms)
+        end
+      end
     end
 
     render json: {}
@@ -80,21 +93,14 @@ class RoomsController < ApplicationController
 
   def end_meeting
     @room = Room.includes(occupants: [:home, :current_room]).where(id: params[:id]).first
-    @room.clear_meeting
 
-    MapNotifier.room_update(@room.id, meeting_id: nil)
+    message = "#{current_user.first_name} #{current_user.last_name} has ended your current meeting in #{@room.name}."
+    (@room.occupants - [current_user]).each { |occupant| WebpushNotifier.notify(occupant, message) }
+
+    @room.kill_meeting
+
     MapNotifier.spinner_stop(@room.id)
-
     @room.send_everyone_home
-
-    render json: {}
-  end
-
-  def cancel_meeting
-    @room.clear_meeting
-
-    MapNotifier.room_update(@room.id, meeting_id: nil)
-    MapNotifier.spinner_stop(@room.id)
 
     render json: {}
   end

@@ -21,7 +21,7 @@ gem 'turbolinks', '~> 5'
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
 # Use SCSS for stylesheets
-gem 'sass-rails'
+gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
@@ -31,6 +31,8 @@ gem 'coffee-rails', '~> 4.2'
 gem 'bootstrap3-rails'
 gem 'moment_timezone-rails'
 gem 'momentjs-rails'
+
+gem 'fast_jsonapi'
 
 # user accounts and integration with Slack + Zoom
 gem 'devise' # user accounts
@@ -62,6 +64,8 @@ gem 'jquery-rails'
 gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
 gem 'redis', '~> 3.0'
+gem 'hiredis'
+gem 'redis-rails'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

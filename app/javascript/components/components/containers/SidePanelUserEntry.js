@@ -87,7 +87,7 @@ export class SidePanelUserEntry extends React.Component {
   renderSlackIcon = () => {
     const slackURl = `slack://channel?team=${slack_team_url}&id=${this.props.user.slackDMToken}`;
     return <div className="pr10">
-      <a href={slackURl} onClick={this.doSlackUser}>
+      <a href={slackURl} target="slackWrapper" onClick={this.doSlackUser}>
         {tooltipMe('Slack', `slack${this.props.user.id}`, <i className="fa fa-slack icon cursorPointer" aria-hidden="true"></i>)}
       </a>
     </div>;
@@ -106,7 +106,10 @@ export class SidePanelUserEntry extends React.Component {
   };
 
   doKnock() {
-    knockOrGo(this.props.user.current_room_id,  this.props.currentUser.current_room_id,  this.props.currentUser.home_id, this.props.rooms);
+    this.setState({ returnToFloor: -1 }, ()=>  {
+      this.undoSpotlightUser();
+      knockOrGo(this.props.user.current_room_id,  this.props.currentUser.current_room_id,  this.props.currentUser.home_id, this.props.rooms);
+    });
   }
 
   doSpotlightUser = () => {
@@ -118,9 +121,9 @@ export class SidePanelUserEntry extends React.Component {
 
     const returnToFloor = this.props.currentFloorId;
     const floor = _.get(_.find(this.props.rooms, { id: user.current_room_id }), 'floor_id');
-    const validFloor = _.find(this.props.floors, { id: floor });
+    const validFloor = _.find(this.props.floors, { id: returnToFloor });
     if (this.bounceTimeout) {
-      clearTimeout(this.bounceTimeout);
+      this.undoSpotlightUser();
     }
 
     this.bounceTimeout = setTimeout(() => {
@@ -128,9 +131,9 @@ export class SidePanelUserEntry extends React.Component {
 
       this.doBounce = true;
       const userId = this.props.user.id;
-      if (floor !== this.props.currentFloorId && validFloor) {
+      if (floor !== returnToFloor && validFloor) {
         this.setState({ returnToFloor });
-        // go to the floor the person is on
+        // go to the floor the person is on for preview
         this.props.actions.setCurrentFloorId(floor);
       }
 
@@ -154,10 +157,7 @@ export class SidePanelUserEntry extends React.Component {
   };
 
   undoSpotlightUser = () => {
-    const currentUserRoom =  _.find(this.props.rooms, { id: this.props.currentUser.current_room_id });
-
-    const floor = _.get(_.find(this.props.rooms, { id: this.props.currentUser.current_room_id }), 'floor_id');
-    const validFloor = _.find(this.props.floors, { id: floor });
+    const validFloor = _.find(this.props.floors, { id:   this.state.returnToFloor });
 
     if (this.bounceTimeout) {
       clearTimeout(this.bounceTimeout);
@@ -170,8 +170,8 @@ export class SidePanelUserEntry extends React.Component {
     });
 
     $('#floorSpot').fadeOut('fast');
-    if (validFloor && this.props.currentFloorId !== currentUserRoom.floor_id) {
-      this.props.actions.setCurrentFloorId(floor);
+    if (validFloor && this.props.currentFloorId !== this.state.returnToFloor) {
+      this.props.actions.setCurrentFloorId(this.state.returnToFloor);
     }
   };
 

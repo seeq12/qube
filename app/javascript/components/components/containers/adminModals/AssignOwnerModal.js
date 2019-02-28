@@ -45,7 +45,7 @@ export class AssignOwnerModal extends React.Component {
               filterable
               defaultPageSize={10}
               defaultFilterMethod={(filter, row) =>
-                _.includes(String(row[filter.id]), filter.value)}
+                _.includes(_.toLower(String(row[filter.id])), _.toLower(filter.value))}
               className="-striped -highlight"/>
             <div className="flexColumnContainer flexFill flexJustifyEnd pt10">
               <button className="btn btn-danger" onClick={this.closeModal}>Close</button>

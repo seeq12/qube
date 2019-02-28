@@ -32,11 +32,14 @@ class HomeController < ApplicationController
   end
 
   def themes
-    themes = Dir.entries(Rails.root.join('vendor', 'assets', 'themes'))
-                .reject { |f| File.directory? f }
-                .map { |t| t.chomp('.scss') }
-                .sort
-                .map { |t| { theme_name: t, display_name: t.titleize, css_file: ActionController::Base.new.view_context.asset_path("#{t}.css") } }
+    themes =
+      Rails.cache.fetch("qube_themes", expires_in: 7.days) do
+        Dir.entries(Rails.root.join('vendor', 'assets', 'themes'))
+                    .reject { |f| File.directory? f }
+                    .map { |t| t.chomp('.scss') }
+                    .sort
+                    .map { |t| { theme_name: t, display_name: t.titleize, css_file: ActionController::Base.new.view_context.asset_path("#{t}.css") } }
+      end
     render json: { themes: themes }
   end
 
@@ -50,5 +53,14 @@ class HomeController < ApplicationController
     render json: { temperature: temp, condition: condition, sunset: sunset }
   rescue NoMethodError
     render json: { temperature: rand(100), condition: CONDITIONS.values.uniq.sample }
+  end
+
+  def monitor
+    begin
+      MonitorJob.new.perform()
+    rescue StandardError => e
+      render json: { errors: "SuckerPunch MySQL connection dropped, redeploy or restart!" }, status: :bad_request and return
+    end
+    render json: {}
   end
 end

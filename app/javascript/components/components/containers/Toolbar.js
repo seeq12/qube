@@ -95,8 +95,10 @@ export class Toolbar extends React.Component {
           <MeetingControls currentRoomId={user.current_room_id} user={user} />
 
           <ZoomControls />
-          { user.admin && <span className="fa fa-users fa-lg pl15 cursorPointer iconLarge" onClick={this.showAdminTool}></span>}
-          <span className="fa fa-home fa-2x pl15 cursorPointer iconLarge" onClick={this.goHome}></span>
+
+
+          { user.admin && tooltipMe('Admin Tool', 'admin', <span className="fa fa-users fa-lg pl15 cursorPointer iconLarge" onClick={this.showAdminTool}></span>, 'bottom')}
+          {tooltipMe('Take my to my office', 'goHome', <span className="fa fa-home fa-2x pl15 cursorPointer iconLarge" onClick={this.goHome}></span>, 'bottom')}
 
           <OverlayTrigger
             trigger="click"

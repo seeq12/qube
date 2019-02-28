@@ -142,10 +142,23 @@ export class AdminTool extends React.Component {
 
     return _.concat(columns, [
       { accessor: 'name', Header: 'Name', Cell: row => this.renderEditable(row.original.id, renameRoom, row.value)},
-      { accessor: 'floor_id', Header: 'Floor',  filterable: false, Cell: row => {
+      { accessor: 'floor_id', Header: 'Floor', filterMethod: (filter, row) => {
+          if(filter.value === 'all') {
+            return true;
+          }
+          return row.floor_id === _.toNumber(filter.value);
+        }, Cell: row => {
         const floor = _.find(this.props.floors, { id: row.value });
         return <div>{_.get(floor, 'name')} (Level {_.get(floor, 'level')})</div>;
-      }},
+      },  Filter: ({ filter, onChange }) => {
+          return <select
+            onChange={event => onChange(event.target.value)}
+            style={{ width: '100%' }}
+            value={filter ? filter.value : 'all'}>
+            <option value="all" key={`filter_opt_all`}>all floors</option>
+            {_.map(this.props.floors, (floor) =>  <option value={floor.id} key={floor.id}>{floor.name} (Level {floor.id})</option>)}
+          </select>;
+        }},
 
       { accessor: 'room_type', Header: 'Type',
         filterMethod: (filter, row) => {
@@ -383,7 +396,7 @@ return <select className="mr20 ml10 width-200" value={row.value} onChange={(even
         filterable
         defaultPageSize={10}
         defaultFilterMethod={(filter, row) =>
-          _.includes(String(row[filter.id]), filter.value)}
+          _.includes(_.toLower(String(row[filter.id])), _.toLower(filter.value))}
         className="-striped -highlight"/>
     </div>;
   }

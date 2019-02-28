@@ -150,4 +150,12 @@ export function updateOrAddDepartment(data) {
     });
   };
 }
+export function setSidePanelSearchTerm(sidePanelSearchTerm) {
+  return (dispatch) => {
+    return dispatch({
+      type: types.SET_SIDE_PANEL_SEACH_TERM,
+      sidePanelSearchTerm
+    });
+  };
+}
 

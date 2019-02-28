@@ -2,9 +2,15 @@ class DepartmentsController < ApplicationController
   before_action :set_department, except: [:index, :create]
   before_action :authenticate_user!
   before_action :authorize_user, only: [:create, :update, :destroy]
+  before_action :clear_cache, only: [:create, :update, :destroy]
 
   def index
-    @departments = Department.all
+    departments =
+      Rails.cache.fetch("departments", expires_in: 7.days) do
+        Department.all.select(:id, :name).to_json
+      end
+
+    render json: departments
   end
 
   def create
@@ -45,6 +51,10 @@ class DepartmentsController < ApplicationController
   def authorize_user
     return if current_user.admin?
     render json: { errors: "You're not authorized to to take this action!" }, status: :bad_request
+  end
+
+  def clear_cache
+    Rails.cache.delete("departments")
   end
 
   # Use callbacks to share common setup or constraints between actions.

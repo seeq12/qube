@@ -3,6 +3,7 @@ export default {
   adminDisplay: false,
   adminOnlyMode: false,
   selfRegistration: false,
+  sidePanelSearchTerm: '',
   settings: {},
   floorPlanTransforms: {},
   currentFloorId: '',

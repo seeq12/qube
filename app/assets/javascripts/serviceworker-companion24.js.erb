@@ -58,7 +58,7 @@ function sendSubscriptionToServer(subscription) {
 
 function showTurtle() {
   console.log('show notifications problem turtle');
-  $('#pushNotifications').data('pushnotificationsenabled', 'false');
+  $('#pushNotifications').attr('data-pushnotificationsenabled', 'false');
 }
 
 // Once the service worker is registered set the initial state

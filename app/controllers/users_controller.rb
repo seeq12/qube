@@ -1,19 +1,23 @@
 class UsersController < ApplicationController
-  before_action :set_user, except: [:index, :create, :theme, :history, :present, :welcome]
+  before_action :set_user, except: [:index, :create, :theme, :guests, :history, :present, :welcome, :destroy]
   before_action :authenticate_user!
   before_action :authorize_user, only: [:create, :update, :destroy]
 
   def index
-    @users = User.all.includes(:home, :pinned_rooms, :watching)
-    @guests = Guest.all
+    options = {}
+    options[:include] = [:pinned_rooms, :watching]
+    options[:params] = { id: current_user.id }
+    render json: UserSerializer.new(User.all.includes(:home), options).serialized_json
+  end
 
-    respond_with json: @users.merge(@guests)
+  def guests
+    render json: GuestSerializer.new(Guest.all).serialized_json
   end
 
   def welcome
     render json: { errors: "You're not authorized to to take this action!" }, status: :unauthorized and return unless current_user.admin?
 
-    @user = User.new(user_params.merge(theme: 'default', color: SecureRandom.hex(3), state: 'available', password: Devise.friendly_token[0, 20], current_room: user_params['home'] || Room.next_open_room))
+    @user = User.new(user_params.merge(theme: 'default', color: SecureRandom.hex(3), state: 'available', password: Devise.friendly_token[0, 20], current_room: user_params['home'] || Room.next_open_room, present: false))
     if @user.save
       render json: @user.to_json
     else
@@ -108,7 +112,11 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    render json: { errors: "You can't delete yourself!" }, status: :bad_request if @user == current_user
+    # byebug
+    @user = (params[:id].include? "_guest") ?  Guest.find_by_id(params[:id].remove("_guest")) : User.find_by_id(params[:id])
+
+    render json: { errors: "Couldn't find User with 'id'=#{params[:id]}" }, status: :bad_request and return if @user.nil?
+    render json: { errors: "You can't delete yourself!" }, status: :bad_request and return if @user == current_user
     @user.destroy
     render json: {}
   end

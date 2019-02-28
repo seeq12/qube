@@ -79,9 +79,9 @@ export class App extends React.Component {
     if (this.props.currentUserId  && _.isNil(this.state.settings)) {
       this.setState({ settings: 'foo'});
       loadApplicationSettings().then((data) => {
-        this.props.setAdminOnlyMode(data.data.json.admin_mode);
-        this.props.setSelfRegistrationMode(data.data.json.self_registration);
-        this.setState({ settings: 'foo', 'admin_mode': data.data.json.admin_mode });
+        this.props.setAdminOnlyMode(data.data.admin_mode);
+        this.props.setSelfRegistrationMode(data.data.self_registration);
+        this.setState({ settings: 'foo', 'admin_mode': data.admin_mode });
       });
     }
   }

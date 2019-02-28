@@ -22,15 +22,15 @@ class Guest < ApplicationRecord
   after_destroy :update_absense
 
   def update_presence
-    MapNotifier.guest_user_join(first_name, color, current_room.id)
+    MapNotifier.guest_user_join(id, first_name, color, current_room.id)
   end
 
   def update_room
-    MapNotifier.user_update(id: color, current_room_id: current_room.id)
+    MapNotifier.user_update(id: "#{id}_guest", current_room_id: current_room.id)
   end
 
   def update_absense
-    MapNotifier.guest_user_leave(first_name, color, current_room.id)
+    MapNotifier.guest_user_leave(id, first_name, current_room.id)
   end
 
   def is_guest
