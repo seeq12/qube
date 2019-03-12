@@ -77,5 +77,14 @@ Watching works in reverse, too - if you’ve just ended a meeting, we’ll (wait
 ### Find co-workers quickly.
 Just hover over a co-workers name in the side panel and you'll see them jump up and down happily. A double click will knock on the room the user's currently in (an advanced feature for the impatient ones).
 
+### Sometimes it's okay to take the Shortcut
+You don't want to move your hand all the way to reach for that mouse - we understand. So we've added keyboard shortcuts for some qube actions. 
+
+**ALT + &uarr;** takes you one floor up  
+**ALT + &darr;** takes you one floor down  
+**ALT + &rarr;** exits onto the currently previewed floor  
+**ALT + S** focuses your cursor into the side panel search input field  
+**ESC** clears your side panel search field
+
 ### Enjoy the short commute.
 Just open qube to start working, and close it to stop! You don't need to logout, unless you're on a public machine or really want to.
