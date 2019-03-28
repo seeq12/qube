@@ -270,7 +270,6 @@ return <div className="mb10" key={room.id}>
 
   setSidePanelSort(sidePanelDisplayOptionKey) {
     const cookies = new Cookies();
-
     cookies.set('sidePanelSort', sidePanelDisplayOptionKey, { path: '/', expires: new Date(new Date().getTime()+ 60*60*1000*24*365) });
     this.setState({ sidePanelDisplay: this.getFilterOptions()[sidePanelDisplayOptionKey] });
   }
