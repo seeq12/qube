@@ -613,6 +613,16 @@ html {
   pointer-events: none;
 }
 
+.avatarBackdropCondensed {
+  position: absolute;
+  top: -8px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: transparent;
+  pointer-events: none;
+}
+
 .spotlight {
   z-index: 6000;
   box-shadow: 260px 0px 0px 99999px rgba(50, 50, 50, 0.8);
@@ -705,6 +715,7 @@ html {
 
 .avatarWrapperRoomCondensed {
   float:left;
+  position: relative;
   padding-bottom: 3px;
 }
 

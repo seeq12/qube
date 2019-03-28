@@ -49,7 +49,7 @@ export class Avatar extends React.Component {
 
   renderCondensed = (divStyle) => {
     return <div className={`avatarWrapperRoomCondensed flexRowContainer flexAlignCenter mr5 mt0`}>
-        <div className="avatarBackdrop" id={`avatar-spot-${this.props.id}`}></div>
+        <div className="avatarBackdropCondensed" id={`avatar-spot-${this.props.id}`}></div>
           {tooltipMe(this.props.firstName+ ' '+ this.props.lastName, `avatar${this.props.firstName}`, <div className={`avatarRoomCondensed`} style={divStyle} id={`avatar-icon-${this.props.id}`}/>)}
           </div>;
   };
