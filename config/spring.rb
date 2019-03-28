@@ -4,4 +4,5 @@
   tmp/restart.txt
   tmp/caching-dev.txt
   app/notifiers
+  app/serializers
 ).each { |path| Spring.watch(path) }

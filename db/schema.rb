@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181012190537) do
+ActiveRecord::Schema.define(version: 20190130215341) do
 
   create_table "delayed_jobs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "priority", default: 0, null: false
@@ -86,6 +86,7 @@ ActiveRecord::Schema.define(version: 20181012190537) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "floor_id"
+    t.string "slack_url"
     t.index ["floor_id"], name: "index_rooms_on_floor_id"
     t.index ["owner_id"], name: "index_rooms_on_owner_id"
   end

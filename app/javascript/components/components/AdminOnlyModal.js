@@ -7,7 +7,7 @@ const AdminOnlyModal = () => {
         <div className="sadTurtle"></div>
         <div className="flexRowContainer flexCenter text-center pb15">
           <h3>Even the things we love break sometimes.</h3>
-          <p>Qube isn't fully functioning yet. But don't worry, Nikhila's on it!</p>
+          <p>Qube isn't fully functioning yet. But don't worry, your qube admin is probably on it!</p>
         </div>
       </div>
     </Modal>;

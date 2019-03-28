@@ -23,8 +23,7 @@ export class SidePanel extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      sidePanelDisplay: SIDE_PANEL_DISPLAY.DEFAULT,
-      searchTerm: ''
+      sidePanelDisplay: SIDE_PANEL_DISPLAY.DEFAULT
     };
   }
 
@@ -162,7 +161,7 @@ return <div className="mb10" key={room.id}>
       .compact()
 
       .value();
-
+    unassignedUsers =  this.applyUserSearch(unassignedUsers);
     if (_.isEmpty(unassignedUsers)) {
       return '';
     } else {
@@ -187,7 +186,7 @@ return <div className="mb10" key={room.id}>
   };
 
   applyUserSearch = (users) => {
-    const searchTerm = this.state.searchTerm;
+    const searchTerm = this.props.sidePanelSearchTerm
     const selfRegistration = this.props.selfRegistration;
     if (searchTerm === '') {
       return _.reject(users, { id: this.props.currentUserId });
@@ -271,7 +270,7 @@ return <div className="mb10" key={room.id}>
 
   setSidePanelSort(sidePanelDisplayOptionKey) {
     const cookies = new Cookies();
-    cookies.set('sidePanelSort', sidePanelDisplayOptionKey, { path: '/' });
+    cookies.set('sidePanelSort', sidePanelDisplayOptionKey, { path: '/', expires: new Date(new Date(Date.now() + 2592000)) });
     this.setState({ sidePanelDisplay: this.getFilterOptions()[sidePanelDisplayOptionKey] });
   }
 
@@ -309,7 +308,7 @@ return <div className="mb10" key={room.id}>
           })}
         </div>
           <div className="flexColumnContainer sidePanelFilter pl20 pr10 pt8 pb5">
-            <div className="flexFill"><input id="sidePanelSearch" type="text" autoFocus placeholder="search by username" value={this.state.searchTerm} onChange={(event)=> this.setState({ searchTerm: event.target.value })}/></div> {this.renderSidePanelSortFilter()}
+            <div className="flexFill"><input id="sidePanelSearch" type="text" autoFocus placeholder="search by username" value={this.props.sidePanelSearchTerm} onChange={(event)=> this.props.actions.setSidePanelSearchTerm(event.target.value)}/></div> {this.renderSidePanelSortFilter()}
           </div>
 
           {this.renderSidePanelList()}
@@ -349,7 +348,8 @@ const mapStateToProps = (...args) => {
     departments: args[0].departments,
     currentFloorId: args[0].currentFloorId,
     selfRegistration: args[0].selfRegistration,
-    currentUserId: args[0].currentUserId
+    currentUserId: args[0].currentUserId,
+    sidePanelSearchTerm: args[0].sidePanelSearchTerm
   };
 };
 

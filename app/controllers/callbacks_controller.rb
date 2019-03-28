@@ -9,6 +9,7 @@ class CallbacksController < Devise::OmniauthCallbacksController
 
     return root_path unless @user.persisted?
 
+    MapNotifier.logout(@user.id)
     @user.update_attributes(endpoint: nil, p256dh: nil, auth: nil)
 
     MapNotifier.user_update(@user.slice(:id, :current_room_id, :last_room_entered_at))

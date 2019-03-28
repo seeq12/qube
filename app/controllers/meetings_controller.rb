@@ -29,7 +29,7 @@ class MeetingsController < ApplicationController
     meeting.room.send_everyone_home
 
     user = User.find_by_zoom_host_id(meeting.host_id)
-    clear_status(user) unless meeting.duration.zero?
+    clear_status(user)
     MapNotifier.ghost_user_join(user.id, meeting.room.id) unless user.present
     user.notify_watchers if meeting.room.office? && user.pounceable?
   end
@@ -108,7 +108,8 @@ class MeetingsController < ApplicationController
 
     status_updates =
       if user.state == 'busy' && user.status.present?
-        updated_status_message = "#{user.status} [#{meeting_topic} until #{back_by.strftime('%-l:%M%P %Z')}]"
+        back_by_message = meeting_duration.to_i.zero? ? '' : " until #{back_by.strftime('%-l:%M%P %Z')}"
+        updated_status_message = "#{user.status} [#{meeting_topic}#{back_by_message}]"
         { status: updated_status_message }
       else
         { state: 'busy', status: meeting_topic, back_by: back_by }

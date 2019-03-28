@@ -752,10 +752,11 @@ html {
   background-repeat: no-repeat;
   z-index: 400;
   margin-top: 50px;
+  pointer-events: none;
 }
 
 .loginQube {
-  background-image: image-url("default/cube_login.svg");
+  background-image: image-url("default/qube_login.svg");
   background-repeat: no-repeat;
   height: 75px;
   width: 75px;

@@ -15,7 +15,7 @@ Rails.application.routes.draw do
     post :invite, on: :member
   end
 
-  resources :rooms, only: [:index, :show, :update] do
+  resources :rooms, only: [:index, :update] do
     patch :enter, on: :member
     post :invite, on: :member
     post :knock, on: :member
@@ -42,6 +42,7 @@ Rails.application.routes.draw do
     patch :unwatch, on: :member
     get :message, on: :member
     get :slack_presence, on: :member
+    get :guests, on: :collection
   end
 
   resources :settings, only: [:index] do
@@ -55,4 +56,5 @@ Rails.application.routes.draw do
   get :slack_urls, to: 'home#slack_urls'
   get :themes, to: 'home#themes'
   get :weather, to: 'home#weather'
+  get :monitor, to: 'home#monitor'
 end

@@ -55,13 +55,13 @@ export class AssignHomeModal extends React.Component {
           <h3 className="pb15">Assign a home</h3>
           <div className="width-maximum">
             <ReactTable
-              data={_.filter(this.props.rooms, { owner_id: null, room_type: 'office' })}
+              data={_.filter(this.props.rooms, { room_type: 'office', owner_id: null })}
               columns={columns}
               width={900}
               filterable
               defaultPageSize={10}
               defaultFilterMethod={(filter, row) =>
-                _.includes(String(row[filter.id]), filter.value)}
+                _.includes(_.toLower(String(row[filter.id])), _.toLower(filter.value))}
               className="-striped -highlight"/>
             <div className="flexColumnContainer flexFill flexJustifyEnd pt10">
               <button className="btn btn-danger" onClick={this.closeModal}>Close</button>

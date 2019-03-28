@@ -57,8 +57,8 @@ export function clearMeeting() {
   jQuery('#meetingFrameWrapper').empty();
 }
 
-export function joinMeeting(meetingId, userName) {
-  startMeeting('https://zoom.us/j/' + meetingId + '?uname=' + encodeURIComponent(userName));
+export function joinMeeting(meetingId) {
+  startMeeting('https://zoom.us/j/' + meetingId);
 }
 
 export function startMeeting(meetingUrl) {
@@ -117,8 +117,8 @@ export function knockOrGo(roomId, currentRoomId, homeId, roomList) {
 }
 
 export function getUserName(user, selfRegistration) {
-  const firstName = _.get(user, 'first_name');
-  const lastName = _.get(user, 'last_name');
+  const firstName = _.get(user, 'first_name', '');
+  const lastName = _.get(user, 'last_name', '');
   if (selfRegistration) {
     return (!!firstName ? firstName : 'No name?!');
   } else {

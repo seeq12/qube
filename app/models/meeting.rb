@@ -70,7 +70,7 @@ class Meeting
 
     participants = entrant.present? ? [entrant] : room.occupants.where.not(id: room.host_id)
     participants.each do |participant|
-      MapNotifier.join_meeting(room_id: room.id, user: participant.id, meeting_url: "#{room.meeting_url}?#{{ uname: participant.name }.to_query}")
+      MapNotifier.join_meeting(room_id: room.id, user: participant.id, meeting_url: "#{room.meeting_url}")
     end
     true
   end

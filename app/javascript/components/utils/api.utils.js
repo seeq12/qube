@@ -1,12 +1,50 @@
 import axios from 'axios';
-import { STATES } from '../constants/appConstants';
+import {STATES} from '../constants/appConstants';
+import _ from "lodash";
 
 export function loadRooms() {
-  return axios.get('/rooms.json').then(response => response.data);
+  return axios.get('/rooms.json').then((response) => _.map(response.data.data, (entry) => _.assign({id: _.toNumber(entry.id)}, {...entry.attributes})));
 }
 
 export function loadUsers() {
-  return axios.get('/users.json').then(response => response.data);
+  return axios.get('/users.json').then((response) => {
+    const users = _.map(response.data.data, (entry) => _.assign({id: _.toNumber(entry.id)}, {...entry.attributes}));
+    const user = _.first(_.filter(response.data.data, (user) => {
+      if (!_.isEmpty(user.relationships)) {
+        return user;
+      }
+    }));
+
+    // map pinned and watching onto the user in the list
+    // pinned rooms
+    const pinnedRooms = _.map(user.relationships.pinned_rooms.data, (pinnedEntry) => {
+      return _.find(response.data.included, {id: pinnedEntry.id}).attributes;
+    });
+
+    // assign the slack dms
+    _.forEach(_.keys(user.attributes.slack_dms), (key) => {
+      _.assign(_.find(users, {id: _.toNumber(key)}), {slackDMToken: user.attributes.slack_dms[key] });
+    });
+
+    const watching = _.chain(response.data.included)
+      .filter({type: 'watching'})
+      .map('id')
+      .map((stringId) => _.toNumber(stringId))
+      .value();
+
+    const properUser = _.assign({}, {...user.attributes}, {
+      pinned_rooms: pinnedRooms,
+      id: _.toNumber(user.id),
+      watching_ids: watching
+    });
+
+    _.remove(users, {id: _.toNumber(user.id)});
+    users.push(properUser);
+    return axios.get('/users/guests.json').then((response) => {
+      const guests= _.map(response.data.data, (entry) => _.assign({id: `${entry.id}_guest`}, {...entry.attributes}));
+      return _.concat(users, guests);
+    });
+  });
 }
 
 export function slackUser(userId) {
@@ -34,31 +72,31 @@ export function endMeeting(roomId) {
 }
 
 export function updateStatus(status, userId) {
-  return doPatchUpdate('/users/' + userId, { status });
+  return doPatchUpdate('/users/' + userId, {status});
 }
 
 export function updateState(state, userId) {
-  return doPatchUpdate('/users/' + userId, { state });
+  return doPatchUpdate('/users/' + userId, {state});
 }
 
 export function updateEmotion(emotion, userId) {
-  doPatchUpdate('/users/' + userId, { emotion });
+  doPatchUpdate('/users/' + userId, {emotion});
 }
 
 export function updateColor(color, userId) {
-  doPatchUpdate('/users/' + userId, { color });
+  doPatchUpdate('/users/' + userId, {color});
 }
 
 export function updateBackBy(backByTime, userId) {
-  return doPatchUpdate('/users/' + userId, { back_by: backByTime });
+  return doPatchUpdate('/users/' + userId, {back_by: backByTime});
 }
 
 export function setUserAvailable(userId) {
-  doPatchUpdate('/users/' + userId, { back_by: null, state: STATES.AVAILABLE, status: '' });
+  doPatchUpdate('/users/' + userId, {back_by: null, state: STATES.AVAILABLE, status: ''});
 }
 
 export function setUserSocial(userId) {
-  doPatchUpdate('/users/' + userId, { back_by: null, state: STATES.SOCIAL, status: '' });
+  doPatchUpdate('/users/' + userId, {back_by: null, state: STATES.SOCIAL, status: ''});
 }
 
 export function enterRoom(roomId) {
@@ -77,7 +115,7 @@ export function assignRoomToUser(roomId, userId) {
   return axios({
     method: 'patch',
     url: '/rooms/' + roomId + '/claim',
-    data: { user_id: userId }
+    data: {user_id: userId}
   });
 }
 
@@ -106,22 +144,22 @@ export function signOut() {
 }
 
 export function setTheme(theme, userId) {
-  return doPatchUpdate('/users/' + userId, { theme })
+  return doPatchUpdate('/users/' + userId, {theme})
     .then(() => {
-    location.reload(true);
-  });
+      location.reload(true);
+    });
 }
 
 export function setTimezone(timezone, userId) {
-  return doPatchUpdate('/users/' + userId, { timezone });
+  return doPatchUpdate('/users/' + userId, {timezone});
 }
 
 export function updatePMI(userId, usePmi) {
-  doPatchUpdate('/users/' + userId, { 'use_pmi': usePmi });
+  doPatchUpdate('/users/' + userId, {'use_pmi': usePmi});
 }
 
 export function updateHighscore(userId, score) {
-  doPatchUpdate('/users/' + userId, { score });
+  doPatchUpdate('/users/' + userId, {score});
 }
 
 export function fetchHighscore() {
@@ -129,7 +167,7 @@ export function fetchHighscore() {
 }
 
 export function renameRoom(roomId, name) {
-  return doPatchUpdate('/rooms/' + roomId, { name: name });
+  return doPatchUpdate('/rooms/' + roomId, {name: name});
 }
 
 export function checkForSlack(userId) {
@@ -157,37 +195,37 @@ export function inviteByDepartment(departmentId, roomId) {
   return axios({
     method: 'post',
     url: '/departments/' + departmentId + '/invite',
-    data: { room_id: roomId }
+    data: {room_id: roomId}
   });
 }
 
 export function renameUser(userId, name) {
-  return doPatchUpdate('/users/' + userId, { first_name: name });
+  return doPatchUpdate('/users/' + userId, {first_name: name});
 }
 
 export function updateDepartmentAssignment(userId, departmentId) {
-  return doPatchUpdate('/users/' + userId, { department_id: departmentId });
+  return doPatchUpdate('/users/' + userId, {department_id: departmentId});
 }
 
 export function updateFirstName(userId, name) {
-  return doPatchUpdate('/users/' + userId, { first_name: name });
+  return doPatchUpdate('/users/' + userId, {first_name: name});
 }
 
 export function updateLastName(userId, name) {
-  return doPatchUpdate('/users/' + userId, { last_name: name });
+  return doPatchUpdate('/users/' + userId, {last_name: name});
 }
 
 
 export function renameFloor(floorId, name) {
-  return doPatchUpdate('/floors/' + floorId, { name });
+  return doPatchUpdate('/floors/' + floorId, {name});
 }
 
 export function setUserPresent(userId) {
-  return doPatchUpdate('/users/' + userId, { present: true });
+  return doPatchUpdate('/users/' + userId, {present: true});
 }
 
 export function starRoom(roomId, position) {
-  return doPatchUpdate('/rooms/' + roomId + '/star', { position_id: position });
+  return doPatchUpdate('/rooms/' + roomId + '/star', {position_id: position});
 }
 
 export function unstarRoom(roomId) {
@@ -229,31 +267,31 @@ export function refreshEveryone() {
 }
 
 export function setAdminOnlyModeAPI(adminOnly) {
-  return doPatchUpdate('/settings', { admin_mode: adminOnly });
+  return doPatchUpdate('/settings', {admin_mode: adminOnly});
 
 }
 
 export function setSelfRegistrationAPI(selfRegistration) {
-  return doPatchUpdate('/settings', { self_registration: selfRegistration });
+  return doPatchUpdate('/settings', {self_registration: selfRegistration});
 }
 
 export function makeUserAdmin(userId, admin) {
-  return doPatchUpdate('/users/' + userId, { admin });
+  return doPatchUpdate('/users/' + userId, {admin});
 }
 
 export function renameDepartment(departmentId, name) {
-  return doPatchUpdate('/departments/' + departmentId, { name });
+  return doPatchUpdate('/departments/' + departmentId, {name});
 }
 
 export function updateFloorSize(floorId, size) {
-  return doPatchUpdate('/floors/' + floorId, { size });
+  return doPatchUpdate('/floors/' + floorId, {size});
 }
 
 export function addDepartment(name) {
   return axios({
     method: 'post',
     url: '/departments',
-    data: { name }
+    data: {name}
   });
 }
 
@@ -261,7 +299,7 @@ export function addFloor(name, size, level) {
   return axios({
     method: 'post',
     url: '/floors',
-    data: { name, size, level }
+    data: {name, size, level}
   });
 }
 
@@ -277,7 +315,7 @@ export function reorderFloors(sortedFloorIds) {
   return axios({
     method: 'patch',
     url: '/floors/reorder',
-    data: { order: sortedFloorIds }
+    data: {order: sortedFloorIds}
   });
 }
 

@@ -73,13 +73,15 @@ class User < ApplicationRecord
   before_save :update_last_room_entered_timestamp
   before_save :update_last_offline
   before_save :ensure_higher_score
+  after_save :update_slack_dms, if: :saved_change_to_slack_token?
   after_create :update_everyone
 
-  after_update :update_slack_dms, if: :saved_change_to_slack_token?
+  after_update :update_slack_urls, if: :saved_change_to_current_room_id?
   after_update :update_status_slack, if: :slack_status_changed?
   after_update :update_everyone, if: :public_attribute_changed?
   after_commit :notify_watchers, if: :newly_pounceable?
 
+  after_destroy :clean_up_home
   after_destroy :notify_destroy
 
   devise :database_authenticatable, :registerable, :omniauthable, :recoverable, :rememberable, :trackable, :validatable, :session_limitable
@@ -88,7 +90,7 @@ class User < ApplicationRecord
   STATES = ['available', 'busy', 'BRB', 'Feeling social']
 
   def name
-    "#{first_name} #{last_name}"
+    "#{[first_name, last_name].join(' ')}"
   end
 
   def home_id
@@ -161,12 +163,13 @@ class User < ApplicationRecord
     return if user.current_room == current_room
 
     room_request = RoomRequest.create!(room: current_room, requester: self, entrant: user)
+    guest_message = current_room.guests.present? ? 'Be nice! Guests are present.' : ''
     WebpushNotifier.notify(self, "You've invited #{user.first_name} to #{current_room.name}.")
 
-    message = "Knock, knock! #{first_name} has invited you to #{current_room.name}."
+    message = "Knock, knock! #{first_name} #{last_name} has invited you to #{current_room.name}.#{guest_message}"
     WebpushNotifier.notify_with_action(user, message, room_request.id)
 
-    message = "#{first_name} has invited #{user.first_name} to #{current_room.name}."
+    message = "#{first_name} #{last_name} has invited #{user.first_name} #{user.last_name} to #{current_room.name}."
     (current_room.occupants - [self]).each { |occupant| WebpushNotifier.notify(occupant, message) }
   end
 
@@ -177,13 +180,13 @@ class User < ApplicationRecord
     end
 
     WebpushNotifier.notify(self, "You've invited everyone who's available to #{current_room.name}.")
-    message = "#{first_name} has invited everyone who's available to #{current_room.name}."
+    message = "#{first_name} #{last_name} has invited everyone who's available to #{current_room.name}."
     (current_room.occupants - [self]).each { |occupant| WebpushNotifier.notify(occupant, message) }
 
     unreachable_users = []
     users.each do |user|
       room_request = RoomRequest.create!(room: current_room, requester: self, entrant: user)
-      message = "Knock, knock! #{first_name} has invited you to #{current_room.name}."
+      message = "Knock, knock! #{first_name} #{last_name} has invited you to #{current_room.name}."
 
       begin
         WebpushNotifier.notify_with_action(user, message, room_request.id)
@@ -200,7 +203,7 @@ class User < ApplicationRecord
 
     WebpushNotifier.notify(self, "Knock, knock! Requesting entrance to #{room.name}.")
 
-    message = "Knock, knock! #{first_name} would like to enter #{room.name}."
+    message = "Knock, knock! #{first_name} #{last_name} would like to enter #{room.name}."
     room.occupants.each { |occupant| WebpushNotifier.notify_with_action(occupant, message, room_request.id) }
   end
 
@@ -224,7 +227,7 @@ class User < ApplicationRecord
     user.uid = auth.uid
     user.provider = auth['provider']
     client = Slack::Web::Client.new(token: user.slack_token)
-    user.timezone = client.users_info(user: auth.uid, include_local: true).user.tz
+    user.timezone ||= client.users_info(user: auth.uid, include_local: true).user.tz
 
     user
   end
@@ -276,6 +279,10 @@ class User < ApplicationRecord
     MapNotifier.user_update(params)
   end
 
+  def clean_up_home
+    home.try(:unclaim)
+  end
+
   def notify_destroy
     MapNotifier.destroy_user(id)
   end
@@ -286,5 +293,9 @@ class User < ApplicationRecord
 
   def update_status_slack
     SlackStatusUpdaterJob.perform_async(slack_token, slack_status)
+  end
+
+  def update_slack_urls
+    SlackUrlUpdaterJob.perform_async(saved_change_to_current_room_id)
   end
 end

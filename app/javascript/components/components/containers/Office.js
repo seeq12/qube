@@ -131,7 +131,7 @@ export class Office extends React.Component {
 
     if ((this.props.room.room_type === 'office' && mouseOver) && !onHomeFloor && _.size(this.props.pinned) < this.props.maxPinnables) { // and make sure the office isn't owned by the current user already
       return <div className="renderPin">
-        {tooltipMe('Pin Office', `pin${this.props.room.id}`,<i className="fa fa-star-o" onClick={this.doPinOffice.bind(this)}></i>)}
+        {tooltipMe('Pin Office', `pin${this.props.room.id}`, <i className="fa fa-star-o" onClick={this.doPinOffice.bind(this)}></i>)}
       </div>;
     }
   };

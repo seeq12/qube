@@ -37,7 +37,7 @@ export class NewUserModal extends React.Component {
       last_name: this.state.lastName,
       first_name: this.state.firstName,
       email: this.state.email,
-      department_id: this.state.department_id })
+      department_id: this.state.departmentId })
        .then(()=> {
       showSuccessNotification('User added'); this.closeModal();
     })
@@ -82,7 +82,9 @@ return <Modal show={this.state.isShownModal} onHide={this.closeModal} bsSize="la
 
             <div className="flexColumnContainer mb8">
               <div className="width-120">Department</div>
-              <select value={this.state.departmentId} onChange={(event) => { this.setState({ departmentId: event.target.value });}}>
+              <select value={this.state.departmentId} onChange={(event) => {
+                this.setState({ departmentId: event.target.value });
+              }}>
                 <option value={null} key={`no_department`}>None</option>
                 {_.map(this.props.departments, (s) =>
                   <option value={s.id} key={s.id}>{s.name}</option>

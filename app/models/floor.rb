@@ -27,6 +27,7 @@ class Floor < ApplicationRecord
 
   NOTIFIABLE_FIELDS = [:name, :level, :size]
   FLOORPLAN_SIZES = [10, 25, 35, 45, 54, 66]
+  RANDOM_GENERATORS = ["Faker::Space.nebula.gsub(' Nebula', '')", "Faker::Space.constellation", "Faker::Space.moon", "Faker::Superhero.name", "Faker::Superhero.power", "Faker::Dessert.topping", "Faker::Dessert.flavor", "Faker::Hacker.noun"]
 
   def self.office_size(min_offices)
     (min_offices / Floor::FLOORPLAN_SIZES.max.to_f).ceil
@@ -38,18 +39,12 @@ class Floor < ApplicationRecord
 
   def grow
     Room::SPECIAL_ROOMS.each do |room|
-      name =
-        loop do
-          possible_name = [Faker::Space.nebula.gsub(' Nebula', ''), Faker::Space.constellation, Faker::Space.moon].sample
-          break possible_name if Room.where('name like ?', "%#{possible_name}%").empty?
-        end
-
-      Room.where(floor: self, floorplan_id: room[3]).first_or_create(name: "#{name} #{room[0]}", room_type: room[1], max_occupancy: room[2])
+      Room.where(floor: self, floorplan_id: room[3]).first_or_create(name: "#{random_name} #{room[0]}", room_type: room[1], max_occupancy: room[2])
     end
 
     special_room_ids = Room::SPECIAL_ROOMS.map(&:last)
     (size + Room::SPECIAL_ROOMS.count).times.reject { |id| special_room_ids.include? id }.each do |i|
-      Room.where(floor: self, floorplan_id: i).first_or_create(name: Room::OFFICE_NAMES.sample, room_type: 'office', max_occupancy: 4)
+      Room.where(floor: self, floorplan_id: i).first_or_create(name: random_name, room_type: 'office', max_occupancy: 4)
     end
 
     MapNotifier.refresh
@@ -83,5 +78,15 @@ class Floor < ApplicationRecord
 
   def notify_destroy
     MapNotifier.destroy_floor(id)
+  end
+
+  def random_name
+    @@index ||= 0
+    begin
+      eval(RANDOM_GENERATORS[@@index])
+    rescue Faker::UniqueGenerator::RetryLimitExceeded => e
+      @@index += 1
+      eval(RANDOM_GENERATORS[@@index])
+    end
   end
 end

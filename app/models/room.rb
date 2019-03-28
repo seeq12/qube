@@ -13,6 +13,7 @@
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  floor_id      :integer
+#  slack_url     :string(255)
 #
 # Indexes
 #
@@ -30,14 +31,6 @@ class Room < ApplicationRecord
   validates_presence_of :name, :max_occupancy
 
   ENTRANCE_SPACES = %w(lobby watercooler)
-
-  OFFICE_NAMES = ['Holmington Castle', 'Mortbunge Marsh', 'Blackfield Mountain', 'Highwood Mount', 'Moorsworth',
-                  'Village Of Winhill', 'Caves Of Dalwardine', 'Snowwyvern', 'Silvercastle', 'Summerhall', 'Swynhill', 'Ermina',
-                  'Aztlan', 'Vousolus Dale', 'Batrook Deserts', 'Doa\'i Mere', 'Aelochual Straits', 'Riprot Isle', 'Fraisalu Forests',
-                  'Rightdip Canyon', 'Chytr Crossing', 'Mortbunge Marsh', 'Blackfield Mountain', 'Drakedwarf Beach', 'Wavebug Outpost',
-                  'The Heir of Shadow', 'The Thief of Ice', 'The Keeper of Hope', 'The Reaper', 'The Mage of Blood', 'The Warrior of Light',
-                  'The Rogue of Destiny ', 'The Guardian of Mind', 'The Soldier of Metal', 'The Prince of Knowledge', 'The Queen of Mist',
-                  'The Seer of All', 'The King of Ink', 'The Bard of Justice', 'Faylight']
 
   # room name, room type, max occupancy, and floorplan id
   SPECIAL_ROOMS = [['Water Cooler', 'watercooler', 12, 0],
@@ -65,7 +58,7 @@ class Room < ApplicationRecord
     Room.find_by_room_type('auditorium')
   end
 
-  def slack_url
+  def generate_slack_url
     return '' unless office? && owner.present? && occupants.length.between?(2, 8) && owner.uid
 
     client = Slack::Web::Client.new(token: owner.slack_token)
@@ -81,15 +74,19 @@ class Room < ApplicationRecord
     "slack://channel?team=T02LE0A28&id=#{channel_id}"
   end
 
-  def clear_meeting
-    unless meeting_id.nil? && host_id.nil?
-      logger.fatal "CLEARING MEETING FOR #{name}"
-      Zoomus.new.meeting_end(host_id: host_id, id: meeting_id)
-      update_attributes(meeting_id: nil, host_id: nil)
-      return true
-    end
+  def kill_meeting
+    return if meeting_id.nil? && host_id.nil?
 
-    false
+    Zoomus.new.meeting_end(host_id: host_id, id: meeting_id)
+    update_attributes(meeting_id: nil, host_id: nil)
+    MapNotifier.room_update(id, meeting_id: nil)
+  end
+
+  def clear_meeting
+    return unless occupants.count.zero?
+
+    logger.fatal "CLEARING MEETING FOR #{name} occupants: #{occupants.count}"
+    kill_meeting
   end
 
   def send_everyone_home
@@ -150,5 +147,13 @@ class Room < ApplicationRecord
 
   def meeting_url
     meeting_id.present? ? "https://zoom.us/j/#{meeting_id}" : meeting_id
+  end
+
+  def unclaim
+    previous_owner_id = owner_id
+    update_attributes(owner: nil)
+
+    pinned_rooms = PinnedRoom.where(room: self)
+    pinned_rooms.map(&:destroy)
   end
 end

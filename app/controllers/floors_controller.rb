@@ -2,9 +2,15 @@ class FloorsController < ApplicationController
   before_action :set_floor, except: [:index, :create, :reorder]
   before_action :authenticate_user!
   before_action :authorize_user, only: [:create, :update, :destroy, :reorder]
+  before_action :clear_cache, only: [:create, :update, :destroy, :reorder]
 
   def index
-    @floors = Floor.all
+    floors =
+      Rails.cache.fetch("floors", expires_in: 7.days) do
+        Floor.all.select(:name, :id, :level, :size).to_json
+      end
+
+    render json: floors
   end
 
   def create
@@ -47,6 +53,10 @@ class FloorsController < ApplicationController
   def authorize_user
     return if current_user.admin?
     render json: { errors: "You're not authorized to to take this action!" }, status: :bad_request
+  end
+
+  def clear_cache
+    Rails.cache.delete("floors")
   end
 
   # Use callbacks to share common setup or constraints between actions.

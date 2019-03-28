@@ -12,7 +12,7 @@ function onPush(event) {
     var message = data.message;
     console.log('message received: '+ message);
     var title = 'Qube Notification';
-    var icon = '<%= image_url("default/cube.png") %>';
+    var icon = '<%= image_url("default/qube.png") %>';
     var url = new URL(self.location.origin).href;
     event.waitUntil(self.clients.matchAll({ includeUncontrolled: false, type: 'window' }).then(function(clients) {
       var properClient = null;

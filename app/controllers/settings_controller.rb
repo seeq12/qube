@@ -3,10 +3,16 @@ class SettingsController < ApplicationController
   before_action :authorize_user, except: [:index]
 
   def index
-    respond_with json: Setting.instance
+    settings =
+      Rails.cache.fetch("settings", expires_in: 7.days) do
+        Setting.instance.to_json
+      end
+
+    render json: settings
   end
 
   def update
+    Rails.cache.delete("settings")
     setting = Setting.instance
     if setting.update(setting_params)
       render json: setting.to_json

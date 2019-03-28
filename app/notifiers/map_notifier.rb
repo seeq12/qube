@@ -35,11 +35,11 @@ class MapNotifier
     ActionCable.server.broadcast 'map', params.merge(type: 'setting')
   end
 
-  def self.guest_user_join(first_name, color, current_room_id)
-    ActionCable.server.broadcast 'map', id: color, first_name: first_name, current_room_id: current_room_id, present: true, color: color, type: 'guest_user'
+  def self.guest_user_join(id, first_name, color, current_room_id)
+    ActionCable.server.broadcast 'map', id: id, first_name: first_name, current_room_id: current_room_id, present: true, color: color, type: 'guest_user'
   end
 
-  def self.guest_user_leave(first_name, id, current_room_id)
+  def self.guest_user_leave(id, first_name, current_room_id)
     ActionCable.server.broadcast 'map', id: id, first_name: first_name, current_room_id: current_room_id, present: false, type: 'guest_user'
   end
 

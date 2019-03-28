@@ -9,7 +9,7 @@ import Floorplan from './Floorplan';
 import SidePanel from './SidePanel';
 import { NotificationContainer } from 'react-notifications';
 import { checkForSlack, fetchSlackURLS, setUserAvailable, setUserPresent, signOut } from '../../utils/api.utils';
-import { clearMeeting, joinMeeting, startMeeting, getRoom, getUsersInRoom } from '../../utils/utils';
+import { clearMeeting, joinMeeting, startMeeting, getRoom, getUsersInRoom, getUserName } from '../../utils/utils';
 import TimezoneModal from './TimezoneModal';
 import SlackModal from './SlackModal';
 import AdminOnlyModal from '../AdminOnlyModal';
@@ -23,6 +23,7 @@ import CatchMe from './CatchMe';
 import AdminTool from './AdminTool';
 import { loadThemes } from '../../actions/loadActions';
 import { setAdminOnlyMode } from '../../actions/adminToolActions';
+import _ from "lodash";
 
 export class Layout extends React.Component {
   constructor(props) {
@@ -34,7 +35,8 @@ export class Layout extends React.Component {
       displayBackButton: 0,
       backButtonTimeout: null,
       pushNotificationsEnabled: true,
-      lastWeatherUpdate: moment()
+      lastWeatherUpdate: moment(),
+      adminToolDisplayed: -1
     };
 
     window.addEventListener('beforeunload', this.killServiceWorker);
@@ -43,8 +45,13 @@ export class Layout extends React.Component {
   }
 
   previewFloor(event) {
-    if (event.altKey) {
 
+    if (event.keyCode === 27) {
+      this.props.actions.setSidePanelSearchTerm('');
+      event.preventDefault();
+    }
+
+    if (event.altKey) {
       if (event.keyCode === 83) {
         // this is not reactIsh at all:
         $('#sidePanelSearch').focus();
@@ -91,6 +98,7 @@ export class Layout extends React.Component {
     console.log(message);
     const user = _.find(this.props.userList, { id: this.props.currentUserId });
     if (user && !_.get(user, 'present')) {
+      // we are not really sure if we still need this but it's hard to test because I (Birgit) think this was due to network connections dropping
       setUserPresent(this.props.currentUserId);
     }
 
@@ -107,8 +115,6 @@ export class Layout extends React.Component {
         if (moment(lastUpdated).isBefore(lastValidLogin)) {
           return signOut().then(() => window.location.reload());
         }
-
-        this.doFetchSlackUrls();
       });
     }
 
@@ -151,18 +157,19 @@ export class Layout extends React.Component {
 
         if (_.has(message, 'current_room_id') &&  message.id === this.props.currentUserId) {
           const currentFloorId = _.get(_.find(this.props.rooms, { id: message.current_room_id }), 'floor_id');
-          const isOnProperFloor = currentFloorId === this.props.currentFloorId;
+          const isOnProperFloor = currentFloorId === this.props.currentFloorId === this.props.backUpFloorId;
           if (!isOnProperFloor) {
             this.props.actions.setBackupFloorId(currentFloorId);
+            this.props.actions.setCurrentFloorId(currentFloorId);
           }
         }
 
         this.props.updateUserProperty(_.omit(message, ['type']));
         return;
       case 'guest_user':
-        const guest = _.assign({}, _.omit(message, ['type']), { is_guest: true });
+        const guest = _.assign({}, _.omit(message, ['type']), { is_guest: true, id: `${message.id}_guest`});
         if (_.get(message, 'present')) {
-          this.props.doAddUser(guest);
+          this.props.addUser(guest);
         } else {
           // remove guest users from the list as they should no longer display when they go offline:
           this.props.removeGuestUser(guest);
@@ -203,7 +210,7 @@ export class Layout extends React.Component {
             if (message.try_count % 3 === 0) {
               const currentRoom = getRoom(this.props.rooms, user.current_room_id);
               const meetingId = _.get(currentRoom, 'meeting_id');
-              joinMeeting(meetingId, _.get(user, 'name'));
+              joinMeeting(meetingId);
             } else {
               startMeeting(message.meeting_url);
             }
@@ -213,12 +220,15 @@ export class Layout extends React.Component {
         return;
       case 'meeting_joined':
         if (message.id === this.props.currentUserId) {
+          // also reset the spinner
+          const currentUser = _.find(this.props.userList, {id: message.id});
+          this.props.updateRoomProperty({ id: _.get(currentUser, 'room_id'), spinner: 'stop' });
           clearMeeting();
         }
 
         return;
       case 'new_user':
-        this.props.doAddUser(_.omit(message, ['type']));
+        this.props.addUser(_.omit(message, ['type']));
         setTimeout(this.doFetchSlackUrls, _.size(this.props.userList) * 500);
       case 'spinner':
         this.props.updateRoomProperty({ id: message.room_id, spinner: message.action });
@@ -238,9 +248,10 @@ export class Layout extends React.Component {
 
   onConnect = () => {
     console.log('on connect triggered');
+    // this was added to ensure that users show present after their connection dropped
     setUserPresent(this.props.currentUserId);
     if (!this.state.initialLoad) {
-      this.props.actions.loadUserList().then(() => this.doFetchSlackUrls());
+      this.props.actions.loadUserList();
     }
   };
 
@@ -276,11 +287,13 @@ export class Layout extends React.Component {
     const displaySlackWarning = this.state.slackWarningCount === 2;
     const displayBackButton =  this.state.displayBackButton === 2;
     const showAdminModal = this.props.adminOnlyMode && !user.admin;
+
     return showAdminModal ? <AdminOnlyModal/> : (this.props.displayAdmin ? <AdminTool adminOnlyMode={this.props.adminOnlyMode} rooms={this.props.rooms}/> :
       (<div className="height-maximum backdrop">
         <CatchMe/>
         <NotificationContainer/>
         <div id="meetingFrameWrapper" className="width-1 height-1 positionOffscreen"></div>
+        <iframe name="slackWrapper" className="width-1 height-1 positionOffscreen"></iframe>
         <WeatherThemeSupport/>
         { this.renderTurtle(user) }
         { displayTimezoneWarning && <TimezoneModal userId={user.id} qubeTimezone={this.state.qubeTimezone} browserTimezone={this.state.browserTimezone}/>}
@@ -314,8 +327,8 @@ export class Layout extends React.Component {
       const user = _.find(responses[0].data, { id:  this.props.currentUserId });
       const currentRoom = _.find(responses[3].data, { id: user.current_room_id });
       this.props.actions.setBackupFloorId(currentRoom.floor_id);
+      this.props.actions.setCurrentFloorId(currentRoom.floor_id);
       this.setState({ initialLoad: false });
-      this.doFetchSlackUrls();
     });
   }
 
@@ -359,6 +372,19 @@ export class Layout extends React.Component {
           });
         }, 1000 * 60 * 2);
       }
+
+      if (this.props.displayAdmin && this.state.adminToolDisplayed !== 1) {
+        this.setState({ adminToolDisplayed: 1 });
+        this.props.actions.setBackupFloorId(-1);
+      } else if(!this.props.displayAdmin && this.state.adminToolDisplayed === 1) {
+        this.setState({ adminToolDisplayed: 2 }, () => {
+          const currentUser = _.find(this.props.userList, { id: this.props.currentUserId });
+          const currentRoom = _.find(this.props.rooms, { id: currentUser.current_room_id });
+          const currentLevel = _.get( _.find(this.props.floors, { id: currentRoom.floor_id }), 'id');
+          this.props.actions.setBackupFloorId(currentLevel);
+          this.props.actions.setCurrentFloorId(currentLevel);
+        });
+      }
     }
   }
 }
@@ -387,6 +413,7 @@ const mapStateToProps = (...args) => {
     departments: args[0].departments,
     themes: args[0].themes,
     displayAdmin: args[0].adminDisplay,
+    selfRegistration: args[0].selfRegistration,
     adminOnlyMode: args[0].adminOnlyMode
   };
 };

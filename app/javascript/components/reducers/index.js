@@ -13,6 +13,7 @@ import adminDisplay from './adminToolReducer';
 import adminOnlyMode from './adminOnlyModeReducer';
 import selfRegistration from './selfRegistrationReducer';
 import backUpFloorId from './backupFloorReducer';
+import sidePanelSearchTerm from './sidePanelSearchTermReducer';
 import { routerReducer } from 'react-router-redux';
 
 const rootReducer = combineReducers({
@@ -30,6 +31,7 @@ const rootReducer = combineReducers({
     adminDisplay,
     adminOnlyMode,
     selfRegistration,
+    sidePanelSearchTerm,
     routing: routerReducer
   });
 

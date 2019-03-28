@@ -23,7 +23,7 @@ export class MeetingControls extends React.Component {
   }
 
   doJoinMeeting(meetingId) {
-    joinMeeting(meetingId, this.props.user.name);
+    joinMeeting(meetingId);
   }
 
   renderStartMeetingButton= () => {

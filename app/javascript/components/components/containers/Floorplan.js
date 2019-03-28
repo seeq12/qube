@@ -338,15 +338,8 @@ export class Floorplan extends React.Component {
 
   renderFloorSelection() {
     const { floors, currentFloorId, backUpFloorId } = this.props;
-    const floorCount = _.size(floors);
-    let widthStyle = 'nineFloorsOrMore';
-    if (floorCount < 4) {
-      widthStyle = 'threeFloorsOrLess';
-    } else if (floorCount < 9) {
-      widthStyle = 'moreThanThreeLessThanNine';
-    }
-
-    return <div className={`floorSelection ${widthStyle}`} onMouseLeave={()=> this.removePreview()} >
+    let widthStyle = 'threeFloorsOrLess';
+    return _.size(floors) > 1 && <div className={`floorSelection ${widthStyle}`} onMouseLeave={()=> this.removePreview()} >
       {_.chain(floors)
         .sortBy('level')
         .reverse()
@@ -375,11 +368,12 @@ return <div className="floorWrapper" key={`wrapper_${floor.id}`}>
   // make the previewed floor the current floor
   switchFloor(floor) {
     this.props.actions.setBackupFloorId(floor.id);
+    this.props.actions.setCurrentFloorId(floor.id);
   };
 
   renderElevator() {
     let floors = _.clone(this.props.floors);
-    return <div className="elevator">
+    return _.size(floors) > 1 && <div className="elevator">
       {_.chain(floors)
         .sortBy('level')
         .reverse()
@@ -394,6 +388,7 @@ return <div className="floorWrapper" key={`wrapper_${floor.id}`}>
   }
 
   animateElevator(level) {
+    console.log('animate elevator');
     $('.elevatorDoorRight').velocity({ width: 108 },  { duration: 1000, complete: ()=> {
         $('.elevator').velocity({ translateY: (level - 1) * 200 },  { duration: 1000, complete: ()=> {
             $('.elevatorDoorLeft').velocity({ width: 0 }, { duration: 1000 });
@@ -407,10 +402,10 @@ return <div className="floorWrapper" key={`wrapper_${floor.id}`}>
 
   componentDidUpdate() {
     if (this.props.backUpFloorId !== this.state.backUpFloorId || this.state.backUpFloorId === null) { // this happens on selecting a floor
-      this.setState({ backUpFloorId:  this.props.backUpFloorId, currentFloorId: -1 }, ()=> {;});
-      this.props.actions.setCurrentFloorId(this.props.backUpFloorId);
-      const currentFloor = _.find(this.props.floors, { id: this.props.backUpFloorId });
-      this.animateElevator(_.get(currentFloor, 'level'));
+      this.setState({ backUpFloorId:  this.props.backUpFloorId, currentFloorId: this.props.backUpFloorId }, () => {
+        const currentFloor = _.find(this.props.floors, { id: this.props.backUpFloorId });
+        this.animateElevator(_.get(currentFloor, 'level'));
+      });
     }
 
     if (this.state.currentFloorId !== this.props.currentFloorId) { // this happens on preview
@@ -426,15 +421,16 @@ return <div className="floorWrapper" key={`wrapper_${floor.id}`}>
       }
 
       const homeRoom = _.find(this.props.rooms, { id: currentUser.home_id });
-      if (this.state.currentUserHomeFloor === -1) {
+      if(!homeRoom) {
+        return;
+      }
+      if (this.state.currentUserHomeFloor === -1 || this.state.currentUserHomeFloor!== _.get(homeRoom, 'floor_id')) {
         if (homeRoom) {
-          this.setState({ currentUserHomeFloor:  _.get(homeRoom, 'floor_id') });
+          this.setState({ currentUserHomeFloor:  _.get(homeRoom, 'floor_id')});
         } else {
           this.setState({ currentUserHomeFloor:  _.get(this.props.floors, '[0].id') });
         }
-
       }
-
     }
   }
 
@@ -444,11 +440,18 @@ return <div className="floorWrapper" key={`wrapper_${floor.id}`}>
     const currentConfig = _.find(config, { roomCount });
     if (currentConfig) {
       this.props.setRoomMaxOccupancy(currentConfig.maxOccupancy);
+      const currentUser = _.find(this.props.userList, { id: this.props.currentUserId });
+      if (currentUser && this.state.currentUserHomeFloor && this.state.maxPinnables === -1) {
+        const homeFloorRoomCount = _.size(_.filter(this.props.rooms, { room_type: 'office', floor_id: this.state.currentUserHomeFloor }));
+        const homeConfig = _.find(config, { roomCount: homeFloorRoomCount });
+        this.setState({ maxPinnables: _.get(homeConfig, 'pinnables') });
+      }
+
       const { width, height, layout: { rightWing, leftWing, center }} = currentConfig;
       // calculate the initial zoom level:
       const floorplanSizing = getInitialZoomLevel(width, height);
       this.props.actions.setFloorplanTransforms(_.assign(floorplanSizing, { width, height }));
-      this.setState({ width, height, rightWing, leftWing, center, maxPinnables: currentConfig.pinnables });
+      this.setState({ width, height, rightWing, leftWing, center });
     }
   };
 }
