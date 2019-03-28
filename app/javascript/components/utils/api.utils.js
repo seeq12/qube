@@ -22,8 +22,9 @@ export function loadUsers() {
     });
 
     // assign the slack dms
-    _.forEach(_.keys(user.attributes.slack_dms), (key) => {
-      _.assign(_.find(users, {id: _.toNumber(key)}), {slackDMToken: user.attributes.slack_dms[key] });
+    const slackDMS = JSON.parse(user.attributes.slack_dms);
+    _.forEach(_.keys(slackDMS), (key) => {
+      _.assign(_.find(users, {id: _.toNumber(key)}), {slackDMToken: slackDMS[key] });
     });
 
     const watching = _.chain(response.data.included)

@@ -138,7 +138,9 @@ export class Office extends React.Component {
 
   updateRoomName = (name) => {
     this.setState({ renderEditableRoomName: false });
-    return renameRoom(this.props.room.id, name);
+    if(!_.isEmpty(name)) {
+      return renameRoom(this.props.room.id, name);
+    }
   };
 
   renderEditableRoomName = () => {
