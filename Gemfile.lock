@@ -226,7 +226,7 @@ GEM
     parser (2.5.1.0)
       ast (~> 2.4.0)
     powerpack (0.1.1)
-    puma (3.11.4)
+    puma (3.12.3)
     rack (2.0.5)
     rack-proxy (0.6.4)
       rack
@@ -411,7 +411,7 @@ DEPENDENCIES
   omniauth
   omniauth-slack
   open-weather
-  puma (~> 3.11)
+  puma (~> 3.12)
   rails (~> 5.1.0)
   rails-ujs (~> 5.1.0.beta1)
   react-rails
