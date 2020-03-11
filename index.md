@@ -36,7 +36,7 @@ But seriously. You know how some people always seem to be in meetings? Some of u
 
 Watching works in reverse, too - if you've just ended a meeting, we'll (wait a few minutes so you can catch your breath and then) send you a list of people who're interested in talking to you.
 
-Advanced feature - you can check the list of people you're watching or who are watching you by running `/qube watching` or `/qube watchers` in slack. (Type `/qube help` if you need reminders of available slack commands).
+Advanced feature - you can check the list of people you're watching or who are watching you by running `/qube watching` or `/qube watchers` in Slack. (Type `/qube help` if you need reminders of available Slack commands).
 
 ### Intelligent Time Zones
 
@@ -48,9 +48,9 @@ Advanced feature - you can check the list of people you're watching or who are w
 
 ### Advanced Slack Support
 
-*Update your qube status through slack.* Forgot to update your qube status before stepping away? Update your status through slack using the new **/qube** command. Example: `/qube emergency ice cream break`
+*Update your qube status through Slack.* Forgot to update your qube status before stepping away? Update your status through Slack using the new **/qube** command. Example: `/qube emergency ice cream break`
 
-*Slack everyone in your office.* Need to slack everyone in your office with notes at the end of a productive meeting? Use the slack icons in the sidebar to open direct messages to the people you're talking to.
+*Slack everyone in your office.* Need to Slack everyone in your office with notes at the end of a productive meeting? Use the Slack icons in the sidebar to open direct messages to the people you're talking to.
 
 **Note: Slack integration works best when you have the desktop client installed. Please install from [https://slack.com/downloads](https://www.google.com/url?q=https://slack.com/downloads&sa=D&ust=1544216473551000) on your primary computer(s) if you're still using the browser version. It takes only 30 seconds.**
 
