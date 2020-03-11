@@ -4,7 +4,10 @@ Qube is a virtual office that enables you to work remotely! It connects with Sla
 
 ![qube](qube.png)
 
-Visit our [site](https://seeq12.github.io/qube/) or contact us at qube@seeq.com to learn more.
+**This repository is no longer maintained.**
+
+To learn more about qube visit our [site](https://seeq12.github.io/qube/) or go to [https://qube.work](https://qube.work) to setup your own qube.
+Questions? Contact us at [qube@seeq.com](mailto:qube@seeq.com).
 
 ## Authors
 

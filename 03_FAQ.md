@@ -38,7 +38,7 @@ No, everything's fine. Browser rejections can happen for a variety of reason, in
 **The office isn't working! People can knock or invite and the notifications show up, but no meeting is started (and individuals don't move to the new room). What's happening, and how do we fix this?**
 This is probably a server issue (mysql connection pool failure). Your server admin should be able to fix this with a redeploy.
 
-**Can I invite offline co-workers to a meeting in qube?** Of course! This is helpful for co-workers who are on the road or find themselves without Internet access. Click the call button that appears next to someone in the side panel. This will send them a slack message with options to connect from a the Zoom app or with a regular phone number.
+**Can I invite offline co-workers to a meeting in qube?** Of course! This is helpful for co-workers who are on the road or find themselves without Internet access. Click the call button that appears next to someone in the side panel. This will send them a Slack message with options to connect from a the Zoom app or with a regular phone number.
 
 **Can I invite a random person to a meeting in qube?** Kind of. Click on the clipboard icon attached to the join button. You should be able to send it out to anyone, and they will be able to join you in the Zoom meeting.
 
