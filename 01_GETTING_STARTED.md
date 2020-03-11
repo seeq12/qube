@@ -10,7 +10,7 @@ Before you're ready to enter your new qube you need both a Zoom and a Slack acco
 
 **qube is only tested and supported in Google Chrome.**
 
-To login to your new virtual office click the link provided by your system administrator and use your slack credentials to login. **Be sure to accept all permissions.** If prompted to enter a slack team, make sure you enter the team name as provided by your admin.
+To login to your new virtual office click the link provided by your system administrator and use your Slack credentials to login. **Be sure to accept all permissions.** If prompted to enter a Slack team, make sure you enter the team name as provided by your admin.
 *Please note that qube should not be used in Incognito Mode, without cookies or aggressive ad blockers.*
 
 
@@ -72,7 +72,7 @@ Watching works in reverse, too - if you’ve just ended a meeting, we’ll (wait
 
 ![watch](pages/watch.png)
 
-*Advanced feature - you can check the list of people you’re watching or who are watching you by running `/qube watching` or `/qube watchers` in slack. (Type `/qube help` if you need reminders of available slack commands).*
+*Advanced feature - you can check the list of people you’re watching or who are watching you by running `/qube watching` or `/qube watchers` in Slack. (Type `/qube help` if you need reminders of available Slack commands).*
 
 ### Find co-workers quickly.
 Just hover over a co-workers name in the side panel and you'll see them jump up and down happily. A double click will knock on the room the user's currently in (an advanced feature for the impatient ones).
