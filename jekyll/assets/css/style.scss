@@ -1,0 +1,71 @@
+---
+---
+
+@import "{{ site.theme }}";
+
+h1 img {
+  width: 20px;
+}
+
+section img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+header p {
+  margin: 0 0 7px;
+}
+
+a, a:visited {
+  color: #232a6e
+}
+
+a:hover, a:focus, a:active {
+  color: #838BD8
+}
+
+.demo {
+  padding: 0px 55px 0px 25px;
+}
+
+footer ul {
+  padding: 0
+}
+
+footer ul a, footer ul a:hover, footer ul a:focus, footer ul a:visited, footer ul a:active  {
+  line-height: 1.5;
+  font-size: 18px;
+  color: white;
+  display: block;
+  text-align: center;
+  padding-top: 6px;
+  height: 34px;
+  background-color: #232a6e;
+  border-radius: 5px;
+}
+
+.post {
+  margin-bottom: 0.75em;
+  border-bottom: thin solid #f3f3f3;
+  padding-top: 1rem;
+  padding-bottom: 1.5rem;
+}
+
+.post-title {
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+.post-summary {
+  line-height: 1.5rem;
+}
+
+.post-meta {
+  width: auto;
+  font-weight: 300;
+  margin: 0;
+  padding: .25em 0;
+  color: #7a7a7a;
+  font-size: .75rem;
+}
