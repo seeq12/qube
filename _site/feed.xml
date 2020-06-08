@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-06-08T13:37:53-07:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">qube</title><subtitle>A virtual office that enables you to work remotely. See who's chatting with coworkers, out of the office, or stepped out for lunch.</subtitle><entry><title type="html">qube v7 Release Notes</title><link href="http://localhost:4000/2020/06/02/qube-release-notes-v7.html" rel="alternate" type="text/html" title="qube v7 Release Notes" /><published>2020-06-02T09:23:45-07:00</published><updated>2020-06-02T09:23:45-07:00</updated><id>http://localhost:4000/2020/06/02/qube-release-notes-v7</id><content type="html" xml:base="http://localhost:4000/2020/06/02/qube-release-notes-v7.html">&lt;p&gt;Great news! We’ve rolled out an overhaul of our administration panel. We believe this new version will be much easier to understand and use.&lt;/p&gt;
+
+&lt;p&gt;For starters, our new admin panel opens up in a new tab! This allows you to update administrative settings (such as assigning homes, renaming offices, etc) and view the updating office at the same time. We’ve also added helpful background for all qube settings - no more clicking buttons to figure out what they do!&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/pages/admin_1.png&quot; alt=&quot;admin panel&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;We’ve streamlined the search, filter, and edit options to make finding and updating your office seamless. Previously, some of the columns were in-line editable and others weren’t. Understandably, this made for a confusing experience - so we’ve moved toward edit modals.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/pages/admin_2.png&quot; alt=&quot;admin panel&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;As always, we love to hear feedback! Let us know if you have any issues, kudos ;), or feature requests.&lt;/p&gt;</content><author><name>nikhila</name></author><category term="release-notes" /><summary type="html">Great news! We’ve rolled out an overhaul of our administration panel. We believe this new version will be much easier to understand and use.</summary></entry><entry><title type="html">qube v6 Release Notes</title><link href="http://localhost:4000/2018/09/28/qube-release-notes-v6.html" rel="alternate" type="text/html" title="qube v6 Release Notes" /><published>2018-09-28T09:23:45-07:00</published><updated>2018-09-28T09:23:45-07:00</updated><id>http://localhost:4000/2018/09/28/qube-release-notes-v6</id><content type="html" xml:base="http://localhost:4000/2018/09/28/qube-release-notes-v6.html">&lt;p&gt;A new version of qube is available! This version features the beta events functionality, as well as some nice office improvements:&lt;/p&gt;
+
+&lt;h2 id=&quot;fewer-temptations&quot;&gt;FEWER TEMPTATIONS&lt;/h2&gt;
+&lt;p&gt;We get it. Large red buttons, anything labeled ‘self-destruct’, buttons without ‘Are you sure?’ prompts - they’re tempting, even if, you know, you’re killing a meeting for dozens of annoyed co-workers. Well, temptation removed! The ‘end meeting’ button is no longer available (unless you’re an admin) in meeting rooms and common areas.&lt;/p&gt;
+
+&lt;h2 id=&quot;no-more-popcorn&quot;&gt;NO MORE POPCORN&lt;/h2&gt;
+&lt;p&gt;Inviting an entire department or the entire company? You will no longer be overloaded with a deluge of arrival notifications.&lt;/p&gt;
+
+&lt;h2 id=&quot;extreme-working&quot;&gt;EXTREME WORKING&lt;/h2&gt;
+&lt;p&gt;Some remote workers are pushing boundaries when it comes to definitions of acceptable Internet conditions and remote working. You know who you are. Well, qube will now cater to your austere Internet overlords. You will no longer flicker for everyone else! You will be notified when your Internet connection is too unstable to use! You will be able to hide your poor WiFi choices (in qube, at least).&lt;/p&gt;
+
+&lt;h2 id=&quot;second-chances&quot;&gt;SECOND CHANCES&lt;/h2&gt;
+&lt;p&gt;Not everyone looks at instruction manuals or introductory emails - at least until you finally admit defeat to the Ikea table that seriously looked so easy to construct two hours ago. I mean, obviously you’ve read our qube intro emails, because they’re awesome - but in case you didn’t, now they’re always one click away.&lt;/p&gt;
+
+&lt;h2 id=&quot;thought-bubbles&quot;&gt;THOUGHT BUBBLES&lt;/h2&gt;
+&lt;p&gt;Ever wonder what someone is thinking? Us too. Hover over someone in the office layout to see who they are and what they’re up to.&lt;/p&gt;
+
+&lt;h2 id=&quot;hassle-free-room-renames&quot;&gt;HASSLE-FREE ROOM RENAMES&lt;/h2&gt;
+&lt;p&gt;So previously, when the office was too busy, you had to wait in line to rename your room. This is like what happens at the DMV. It turns out that not every real-life experience should be translated over to the virtual.&lt;/p&gt;
+
+&lt;h2 id=&quot;share-the-spotlight&quot;&gt;SHARE THE SPOTLIGHT&lt;/h2&gt;
+&lt;p&gt;Hover over someone in the side panel, and we’ll spotlight the entire room your person of interest is in. Your person of interest will still jump up and down excitedly, but you’ll also get a chance to see which room they’re in and who else is there.&lt;/p&gt;
+
+&lt;h2 id=&quot;spotlight-the-invisible&quot;&gt;SPOTLIGHT THE INVISIBLE&lt;/h2&gt;
+&lt;p&gt;Hover over someone who’s offline in the side panel, and we’ll show you their office. No more hiding!&lt;/p&gt;
+
+&lt;h2 id=&quot;your-personal-wingman&quot;&gt;YOUR PERSONAL WINGMAN&lt;/h2&gt;
+&lt;p&gt;Exciting news. qube is now a wingman. Set yourself to “Feeling social”, and we’ll let you know if anyone else is ready to socialize too!&lt;/p&gt;
+
+&lt;h2 id=&quot;events-beta&quot;&gt;EVENTS BETA&lt;/h2&gt;
+&lt;p&gt;It’s finally here! You can now start using our conferences feature for support or training purposes! Email us to get started. Note that we will want to keep usage limited customers during the beta.&lt;/p&gt;</content><author><name>nikhila</name></author><category term="release-notes" /><summary type="html">A new version of qube is available! This version features the beta events functionality, as well as some nice office improvements:</summary></entry><entry><title type="html">qube v5.1 Release Notes</title><link href="http://localhost:4000/2018/09/28/qube-release-notes-v5-1.html" rel="alternate" type="text/html" title="qube v5.1 Release Notes" /><published>2018-09-28T09:23:45-07:00</published><updated>2018-09-28T09:23:45-07:00</updated><id>http://localhost:4000/2018/09/28/qube-release-notes-v5-1</id><content type="html" xml:base="http://localhost:4000/2018/09/28/qube-release-notes-v5-1.html">&lt;p&gt;We offer you a few refinements :)&lt;/p&gt;
+
+&lt;h2 id=&quot;keyboard-navigation&quot;&gt;KEYBOARD NAVIGATION&lt;/h2&gt;
+&lt;p&gt;Press alt + ↑ or ↓ to preview the floor above or above. Note that you can hold down alt and move up/down multiple floors. When you’re ready to move to a floor, press →.
+Press alt + s to bring focus to the search pane.&lt;/p&gt;
+
+&lt;h2 id=&quot;faster-floor-switching&quot;&gt;FASTER FLOOR SWITCHING&lt;/h2&gt;
+
+&lt;h2 id=&quot;reduced-flicker-on-floor-previews&quot;&gt;REDUCED FLICKER ON FLOOR PREVIEWS&lt;/h2&gt;
+
+&lt;h2 id=&quot;first-and-last-names&quot;&gt;FIRST AND LAST NAMES&lt;/h2&gt;
+&lt;p&gt;qube now hosts large companies! Or at least companies with lots of people with the same name (Brian, Chris, Elise, Jenny, Karen, are the most popular) and too many people to know. To make it easier to search for people you don’t know as well, last names have been added.&lt;/p&gt;
+
+&lt;h2 id=&quot;double-click-people-in-the-sidepanel-to-enterknock-their-current-room&quot;&gt;DOUBLE CLICK PEOPLE IN THE SIDEPANEL TO ENTER/KNOCK THEIR CURRENT ROOM&lt;/h2&gt;
+&lt;p&gt;Even with the faster floor switching and reduced flicker, sometimes you just want to knock on someone’s door without switching floors. Now you can - just find them in the side panel and double click to knock on or join the room they’re in. You can also double click room names when sorting by room in the side panel.&lt;/p&gt;
+
+&lt;h2 id=&quot;an-admin-panel&quot;&gt;AN ADMIN PANEL&lt;/h2&gt;
+&lt;p&gt;Most of you will never see it. But now we have it! Be very excited about this, because it makes means significantly less administrative work for onboarders!&lt;/p&gt;
+
+&lt;h2 id=&quot;red-tape&quot;&gt;RED TAPE&lt;/h2&gt;
+&lt;p&gt;We’re a large enough company now that we get to have red tape! This means that only admins can update names or assign rooms. So be nice to your qube admins ;)&lt;/p&gt;
+
+&lt;h2 id=&quot;sidepanel-sort-memory&quot;&gt;SIDEPANEL SORT MEMORY&lt;/h2&gt;
+&lt;p&gt;If you like sorting the side panel by floors, we’ll remember it for you. (But in a forgetful way, so to speak - per browser session until logout).&lt;/p&gt;
+
+&lt;h2 id=&quot;defense-against-wayward-browsers&quot;&gt;DEFENSE AGAINST WAYWARD BROWSERS&lt;/h2&gt;
+&lt;p&gt;Sometimes your browser will invalidate qube notifications (as a result of network changes, expiration, suspicious behavior, etc). We don’t have any control over this, but we can help you out. If we detect that your browser has terminated a connection, we will automatically log you out, reset your state, and let you know via Slack. If the person you’re trying to reach has been left in this state, we’ll also let you know.&lt;/p&gt;</content><author><name>nikhila</name></author><category term="release-notes" /><summary type="html">We offer you a few refinements :)</summary></entry><entry><title type="html">qube v5 Release Notes</title><link href="http://localhost:4000/2018/09/28/qube-release-notes-v5.html" rel="alternate" type="text/html" title="qube v5 Release Notes" /><published>2018-09-28T09:23:45-07:00</published><updated>2018-09-28T09:23:45-07:00</updated><id>http://localhost:4000/2018/09/28/qube-release-notes-v5</id><content type="html" xml:base="http://localhost:4000/2018/09/28/qube-release-notes-v5.html">&lt;p&gt;We’re pleased to announce that construction on our expanded virtual headquarters is mostly complete! We offer you:&lt;/p&gt;
+
+&lt;h2 id=&quot;the-rise-of-a-new-skyscraper&quot;&gt;THE RISE OF A NEW SKYSCRAPER&lt;/h2&gt;
+
+&lt;p&gt;Well, the tallest qube installation is only at three floors right now. But extrapolating from this month’s hiring and last month’s stretch goal success, one day we’ll need a tall and sophisticated (virtual) skyscraper to &lt;a href=&quot;https://i.pinimg.com/originals/88/2b/b0/882bb08f224b6f2e247fbbcc4b73d869.jpg&quot;&gt;compete&lt;/a&gt; &lt;a href=&quot;https://cdn.archpaper.com/wp-content/uploads/2018/01/Base-rainier-square-tower.jpg&quot;&gt;with&lt;/a&gt; &lt;a href=&quot;https://photos.travelblog.org/Photos/8376/42294/f/350991-Cool-Skyscraper-0.jpg&quot;&gt;these&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;a-classy-modern-elevator-experience&quot;&gt;A CLASSY MODERN ELEVATOR EXPERIENCE&lt;/h2&gt;
+
+&lt;p&gt;Cliché startups have ping pong tables and weird office furniture. But super cool companies &lt;a href=&quot;https://static1.squarespace.com/static/51c0c464e4b0d4df8521e78f/t/58c2c9221e5b6c71381cde6c/1489160523128/IMG_6071.jpg&quot;&gt;have&lt;/a&gt; &lt;a href=&quot;https://dynaimage.cdn.cnn.com/cnn/q_auto,w_900,c_fill,g_auto,h_506,ar_16:9/http%3A%2F%2Fcdn.cnn.com%2Fcnnnext%2Fdam%2Fassets%2F120206044602-elevators-aquadom.jpg&quot;&gt;super&lt;/a&gt; &lt;a href=&quot;https://i.pinimg.com/originals/e1/66/47/e16647561c41b37384efa82f76d08f8b.jpg&quot;&gt;awesome&lt;/a&gt; &lt;a href=&quot;https://i.pinimg.com/originals/83/5a/38/835a38d9b0ab590b0d3e50abd97aca54.jpg&quot;&gt;elevators&lt;/a&gt;, and we are no different. Click on the qube icon (lower righthand corner) to change floors and start your journey today.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/pages/elevator_buttons.png&quot; alt=&quot;floors&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;a-google-like-search-with-advanced-indexing-and-sorting&quot;&gt;A GOOGLE-LIKE SEARCH WITH ADVANCED INDEXING AND SORTING&lt;/h2&gt;
+
+&lt;p&gt;Oh, wait. That might be &lt;a href=&quot;https://www.seeq.com/&quot;&gt;Seeq&lt;/a&gt;. Anyway, we’re happy to offer you a new and improved side panel where you can responsively search for your favorite people and sort by room, floor, etcetera.&lt;/p&gt;
+
+&lt;h2 id=&quot;a-sense-of-belonging&quot;&gt;A SENSE OF BELONGING&lt;/h2&gt;
+
+&lt;p&gt;We’ve added support for departments! This also means that you can invite everyone from a department into a conference room and sort coworkers by department in the side panel. You can only belong to one department, so the time has come to decide where your allegiances lay.&lt;/p&gt;
+
+&lt;h2 id=&quot;relocation-benefits&quot;&gt;RELOCATION BENEFITS&lt;/h2&gt;
+
+&lt;p&gt;Moving away from your favorite people is harrowing. Even if you’re only moving one floor up, and your friends are just a virtual elevator ride away. It’s just that you won’t be able to see them at all times in an oddly comforting manner when you look at qube, and that’s important, okay?&lt;/p&gt;
+
+&lt;p&gt;We’ve got your back. Pin the offices of the people you talk to (like?) most on other floors (click the star icon in the upper right corner of any office). You’ll be able to see and knock on their offices without having to change floors.&lt;/p&gt;
+
+&lt;h2 id=&quot;meaningless-rebranding&quot;&gt;MEANINGLESS REBRANDING&lt;/h2&gt;
+
+&lt;p&gt;When new features or products fail to get the recognition or awareness it deserves, a relatively pointless and possibly expensive rebranding effort should immediately commence. Or at least that what we’ve learned from sketchy ad agencies. So we are accordingly rebranding our logout button - it’s still the upper right most button in qube, but now newer! different! flashier!&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;*Note that no functionality has changed - logging out will still reset qube (and will recover disappearing notification problems resulting from stale browser states). No prescription or administrator permission is required to logout. I repeat, the log out button is not cough syrup, so do not use sparingly when problems occur.&lt;/em&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;an-unparalleled-guest-experience&quot;&gt;AN UNPARALLELED GUEST EXPERIENCE&lt;/h2&gt;
+
+&lt;p&gt;Sure, every company says they treat their guests like royalty. But do they offer a complimentary crown to each and every guest? I don’t think so.&lt;/p&gt;
+
+&lt;h2 id=&quot;increased-productivity-and-wellbeing&quot;&gt;INCREASED PRODUCTIVITY AND WELLBEING&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.ngia.com.au/Attachment?Action=Download&amp;amp;Attachment_id=1430&quot;&gt;Research&lt;/a&gt; has shown that “just one plant per workspace” has a large positive impact on stress and performance. Now, the sample size on this study was rather small, and research on virtual plants is rather limited - so to compensate we threw in four plants and a fish for good measure.&lt;/p&gt;
+
+&lt;h2 id=&quot;increased-happiness&quot;&gt;INCREASED HAPPINESS&lt;/h2&gt;
+
+&lt;p&gt;Some of you have complained that a sad turtle modal appears too frequently. We’ve addressed this BUT I just want to say that personally, I don’t think you can ever see too many &lt;a href=&quot;https://external-preview.redd.it/lqbsuqaPsbH49jGkyuafUyTsjLlhBa72qi1nFah__S0.jpg?auto=webp&amp;amp;s=467f4722c010955a53d581ac21a789c689d5654e&quot;&gt;sad turtles&lt;/a&gt;.&lt;/p&gt;</content><author><name>nikhila</name></author><category term="release-notes" /><summary type="html">We’re pleased to announce that construction on our expanded virtual headquarters is mostly complete! We offer you:</summary></entry><entry><title type="html">qube v4 Release Notes</title><link href="http://localhost:4000/2018/06/01/qube-release-notes-v4.html" rel="alternate" type="text/html" title="qube v4 Release Notes" /><published>2018-06-01T09:23:45-07:00</published><updated>2018-06-01T09:23:45-07:00</updated><id>http://localhost:4000/2018/06/01/qube-release-notes-v4</id><content type="html" xml:base="http://localhost:4000/2018/06/01/qube-release-notes-v4.html">&lt;p&gt;A new version of qube is available! This version features &lt;em&gt;streamlined meetings&lt;/em&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;guest-users&quot;&gt;GUEST USERS&lt;/h2&gt;
+&lt;p&gt;View interviewees, board members, customers, and other non-qube personnel&lt;sup&gt;1&lt;/sup&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;join-meeting-synchronization&quot;&gt;JOIN MEETING SYNCHRONIZATION&lt;/h2&gt;
+&lt;p&gt;Joining a qube hosted Zoom meeting (for example, when joining a customer support call by clicking on an external Zoom link) will update your location in qube. Now everyone can see that you’re already taken!&lt;/p&gt;
+
+&lt;h2 id=&quot;leave-meeting-synchronization&quot;&gt;LEAVE MEETING SYNCHRONIZATION&lt;/h2&gt;
+&lt;p&gt;Leaving a meeting in Zoom now sends you home automatically. Sorry, this means no more ducking out of meetings discreetly!&lt;/p&gt;
+
+&lt;h2 id=&quot;intervention-needed-warnings&quot;&gt;INTERVENTION NEEDED WARNINGS&lt;/h2&gt;
+&lt;p&gt;We’re not always able to start your Zoom meeting on your behalf - usually resulting from your browser/OS security settings or application focus. When this happens, we’ll send you a notification indicating that you should click the ‘join meeting’ button to start the meeting.&lt;/p&gt;
+
+&lt;h2 id=&quot;low-bandwidth-friendly-conference-rooms&quot;&gt;LOW-BANDWIDTH FRIENDLY CONFERENCE ROOMS&lt;/h2&gt;
+&lt;p&gt;We will now wait for meeting hosts on super slow Internet connections (◔_◔) to start Zoom meetings before pulling in meeting participants. This means no more annoying ‘The meeting has ended’ messages’ when joining standup!&lt;/p&gt;
+
+&lt;h2 id=&quot;invite-all&quot;&gt;INVITE ALL&lt;/h2&gt;
+&lt;p&gt;There’s an invite all button for the auditorium/cafeteria so the CEO can invite everyone who’s available to company meetings with a single click, and we can get started quicker. Plus, apparently not everyone appreciates receiving a flood of notifications, so…&lt;/p&gt;
+
+&lt;h2 id=&quot;mass-teleportation&quot;&gt;MASS TELEPORTATION&lt;/h2&gt;
+&lt;p&gt;Okay, not really. But meetings are automatically moved from offices to an available conference room if your room becomes overly crowded. And if that’s not mass teleportation, I’m not sure what is.&lt;/p&gt;
+
+&lt;h2 id=&quot;wrong-meeting-room-forgiveness&quot;&gt;WRONG MEETING ROOM FORGIVENESS&lt;/h2&gt;
+&lt;p&gt;Did you start a scheduled meeting in your office accidentally? Now, Meetings move with you when you jump into an open conference room.&lt;/p&gt;
+
+&lt;p&gt;Other notable features/bugfixes:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;We’ve added official support for multiple browsers, so people who regularly switch computers don’t end up in weird states. You will be automatically logged you out of previous sessions.&lt;/li&gt;
+  &lt;li&gt;Back by reminders when you’re busy, because it seems a great many people need them &lt;em&gt;cough cough&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;Now you can watch people who are offline, because pouncing on someone as soon as they come back from vacation is a sign of respect. At least that’s what I’ve learned from pet cats.&lt;/li&gt;
+  &lt;li&gt;We’ve finally addressed the triple notifications issue. We think. I mean, we couldn’t reproduce it anymore, so it’s probably gone. (Let us know if it’s not). p
+When switching from busy to available, your status will clear itself for you #laziness&lt;/li&gt;
+  &lt;li&gt;Back by times pulled from scheduled meeting times in Zoom are now correct (Sigh. DateTime math never gets any easier)&lt;/li&gt;
+  &lt;li&gt;We’ve added a modal to judge you harshly for attempting to use qube on a phone - just in case you try&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;If you’ve read this far into the release notes, you might be a developer! So quick note on the app from a development perspective - qube has been completely re-written from Angular to React and refactored for performance. Although we have rigorously manual tested the application to maintain feature parity, we may have missed something. So please make sure to let me and Birgit know if you notice anything suspicious. Thanks!&lt;/p&gt;
+
+&lt;p&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;em&gt;Disclaimer: Note that guest user support is best effort only. No guarantees are made to ensure the consistency or correctness of guest users. In fact, all guest users will magically disappear on refresh. Surprise!&lt;/em&gt;&lt;/p&gt;</content><author><name>nikhila</name></author><category term="release-notes" /><summary type="html">A new version of qube is available! This version features streamlined meetings.</summary></entry><entry><title type="html">qube v3 Release Notes</title><link href="http://localhost:4000/2018/01/13/qube-release-notes-v3.html" rel="alternate" type="text/html" title="qube v3 Release Notes" /><published>2018-01-13T03:55:16-08:00</published><updated>2018-01-13T03:55:16-08:00</updated><id>http://localhost:4000/2018/01/13/qube-release-notes-v3</id><content type="html" xml:base="http://localhost:4000/2018/01/13/qube-release-notes-v3.html">&lt;p&gt;A new update of Qube is available! This version features &lt;em&gt;spotlight&lt;/em&gt;: hover over a user’s name in the sidebar for one second, and qube will spotlight your person of interest (they’ll even jump and down!) -&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/pages/spotlight.png&quot; alt=&quot;spotlight&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;A few other features to spotlight:&lt;/p&gt;
+
+&lt;h2 id=&quot;start-meetings-with-your-personal-zoom-link&quot;&gt;Start meetings with your personal Zoom link&lt;/h2&gt;
+&lt;p&gt;Just enable ‘Always use Zoom Personal Meeting ID to start meetings’ under settings (the gear icon) in Qube. (Note - meetings with PMIs will take longer to start, so enable only if you use personal Zoom links, and consider starting conference room/auditorium meetings a minute or two early).&lt;/p&gt;
+
+&lt;h2 id=&quot;automatic-time-zone-detection&quot;&gt;Automatic Time Zone Detection&lt;/h2&gt;
+&lt;p&gt;For the wanderers and world travelers! Qube will now auto-detect and update your timezone for your traveling convenience.&lt;/p&gt;
+
+&lt;h2 id=&quot;notification-history&quot;&gt;Notification History&lt;/h2&gt;
+&lt;p&gt;Never miss a notification again if you’re on Windows and using Remote Desktop! The last 10 knock/invite events will now be listed in your history (available under settings (the gear icon)).&lt;/p&gt;
+
+&lt;p&gt;And now, to spotlight a few bugfixes:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;It turns out that not everyone appreciated spontaneous office resizes. Fair enough. Office sizes will now remain exactly as you left it last.&lt;/li&gt;
+  &lt;li&gt;Themes are now available in the customize panel (accessed by clicking your avatar in the upper left corner), and timezone has been moved to settings. Yes, this means that our menu options are now logically grouped! Order has been restored!&lt;/li&gt;
+  &lt;li&gt;Users are now ordered by when they entered a space. I don’t want to call anyone out, but I suspect some people will be very happy to be at the end of the line again for reading retro notes.&lt;/li&gt;
+  &lt;li&gt;Back by/BRB times now behave correctly when you’re on right on the border between 11am and noon. No more awkward back by 12:30AM statuses!&lt;/li&gt;
+  &lt;li&gt;Military time without the colons is now supported, because that’s how real military people tell time.&lt;/li&gt;
+  &lt;li&gt;Watch icons are no longer visible for people in the same private office as you. This means you can’t creep on people that you’re with, and that’s important, okay!&lt;/li&gt;
+  &lt;li&gt;Slack’s newest API (3.0) seems to be a lot more demanding. Hmmm. Fine. We gave in.&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>nikhila</name></author><category term="release-notes" /><summary type="html">A new update of Qube is available! This version features spotlight: hover over a user’s name in the sidebar for one second, and qube will spotlight your person of interest (they’ll even jump and down!) -</summary></entry><entry><title type="html">qube v2 Release Notes</title><link href="http://localhost:4000/2017/09/18/qube-release-notes-v2.html" rel="alternate" type="text/html" title="qube v2 Release Notes" /><published>2017-09-18T01:13:22-07:00</published><updated>2017-09-18T01:13:22-07:00</updated><id>http://localhost:4000/2017/09/18/qube-release-notes-v2</id><content type="html" xml:base="http://localhost:4000/2017/09/18/qube-release-notes-v2.html">&lt;p&gt;A new update of qube is available, and we have some exciting new features for you!&lt;/p&gt;
+
+&lt;h2 id=&quot;scheduled-zoom-meeting-support&quot;&gt;Scheduled Zoom Meeting Support&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;For customer support and sales especially! When you schedule a Zoom meeting with a (potential) customer, qube will automatically update your state to ‘busy’ and your status with relevant details.&lt;/li&gt;
+  &lt;li&gt;Offices can now host scheduled meetings. That means if you get stuck in a customer call and need developer support, you can invite a developer to your office (instead of copying/pasting the Zoom link or forwarding a meeting invite).&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;stronger-slack-integration&quot;&gt;Stronger Slack Integration&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;Forgot to update your qube status before stepping away? Update your status through slack using the new /qube command. Example: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/qube emergency ice cream break&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/pages/watching.png&quot; alt=&quot;watching&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Need to slack everyone in your office with notes at the end of a productive meeting? Use the new slack icons in the sidebar to open direct messages to the people you’re talking to.&lt;/li&gt;
+  &lt;li&gt;Is the person you’re trying to chat with available in qube and offline in slack? [rolling eyes] Don’t worry, we took care of it.
+Note: Slack integration works best when you have the desktop client installed. Please install from https://slack.com/downloads on your primary computer(s) if you’re still using the browser version. It takes only 30 seconds.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;zoom-to-fit&quot;&gt;Zoom to Fit&lt;/h2&gt;
+
+&lt;h2 id=&quot;intelligent-back-by-times&quot;&gt;Intelligent Back By Times&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;You’ll notice a new field for ‘back by’ when you set your state to away or BRB. Enter when you’ll be back in a supported format (such as 1400 or 3pm) in your local timezone. This lets us display all ‘back by’ times in local times in the sidebar. Of course, slack statuses still contain timezones.&lt;/li&gt;
+  &lt;li&gt;We’ve added a new ‘I’m back!’ button for when you return to the office - just an easier way to clear your status.&lt;/li&gt;
+  &lt;li&gt;Are you taking reeaaalllly long lunches because you keep forgetting to update your status when you get back? Well, no more! Slack reminders are here to check up on you when you forget.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;people-watching&quot;&gt;People Watching&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;You know how some people always seem to be in meetings? (&lt;em&gt;cough cough&lt;/em&gt;) Some of us have acquired the skill of pouncing exactly in between meetings. For everyone else, we’ve added the ability to “watch” people and be notified when they’re back from breakfast or finished with meetings.&lt;/li&gt;
+  &lt;li&gt;Watching works in reverse, too - if you’ve just ended a meeting, we’ll (wait a few minutes so you can catch your breath and then) send you a list of people who’re interested in talking to you.
+Advanced feature - you can check the list of people you’re watching or who are watching you by running &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/qube watching&lt;/code&gt; or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/qube watchers&lt;/code&gt; in slack. (Type &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/qube help&lt;/code&gt; if you need reminders of available slack commands).&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;new-themes&quot;&gt;New Themes&lt;/h2&gt;
+&lt;p&gt;I’ll call out darkKnight, for those who require absolute darkness to be content, and weather - this one’s built with a few surprises ;)&lt;/p&gt;
+
+&lt;p&gt;Other fixes/updates:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Added new emoticons&lt;/li&gt;
+  &lt;li&gt;Added notification for all occupants in a room when someone invites a guest&lt;/li&gt;
+  &lt;li&gt;Added a condensed view of office occupants for popular individuals who invite more than three people to their personal office&lt;/li&gt;
+  &lt;li&gt;Added ‘under maintenance’/admin-only mode&lt;/li&gt;
+  &lt;li&gt;Added reconnecting websockets&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>nikhila</name></author><category term="release-notes" /><summary type="html">A new update of qube is available, and we have some exciting new features for you!</summary></entry><entry><title type="html">We’re so excited to announce qube!</title><link href="http://localhost:4000/2017/05/30/qube-release-notes-v0.html" rel="alternate" type="text/html" title="We're so excited to announce qube!" /><published>2017-05-30T08:23:42-07:00</published><updated>2017-05-30T08:23:42-07:00</updated><id>http://localhost:4000/2017/05/30/qube-release-notes-v0</id><content type="html" xml:base="http://localhost:4000/2017/05/30/qube-release-notes-v0.html">&lt;p&gt;It’s official - qube has launched and is here to stay! Thanks to everyone who helped with testing and offered feedback during our alpha preview.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/pages/office_v0.png&quot; alt=&quot;presenting qube!&quot; /&gt;&lt;/p&gt;</content><author><name>nikhila</name></author><category term="release-notes" /><summary type="html">It’s official - qube has launched and is here to stay! Thanks to everyone who helped with testing and offered feedback during our alpha preview.</summary></entry></feed>
